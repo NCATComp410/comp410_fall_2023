@@ -1,4 +1,6 @@
 import unittest
+import re
+import os
 from pii_scan import show_aggie_pride, analyze_text
 
 
@@ -28,3 +30,18 @@ class TestPIIScan(unittest.TestCase):
         # test an invalid UUID for detection
         results = analyze_text('This is not a UUID: 123e4567-e89b-12d3-a456-42665234000')
         self.assertNotIn('UUID', str(results))
+
+    def test_starts_with_test(self):
+        """Test to make sure all test methods start with test"""
+        # In order to run as a test case the method name must start with test
+        # This test checks to make sure all defines within test files start with test
+        # This is a common mistake that can cause tests to be skipped
+        for file in os.listdir('.'):
+            if file.endswith('.py') and file.startswith('test_'):
+                with open(file) as f:
+                    for line in f:
+                        # make sure everything that looks like a method name starts with test
+                        m = re.search(r'\s*def (\w+)', line)
+                        if m:
+                            self.assertTrue(m.group(1).startswith('test'),
+                                            'Method name does not start with test: def ' + m.group(1) + ' in ' + file)
