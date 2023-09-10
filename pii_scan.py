@@ -54,6 +54,14 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
     spacy_recognizer = SpacyRecognizer(check_label_groups=label_groups)
     registry.add_recognizer(spacy_recognizer)
 
+    # create a custom US_SSN recognizer
+    ssn_pattern = Pattern(name='ssn_pattern',
+                           regex=r'(?<!\d)\d{3}-\d{2}-\d{4}(?!\d)',
+                           score=0.9)
+    ssn_recognizer = PatternRecognizer(supported_entity='US_SSN',
+                                        patterns=[ssn_pattern])
+    registry.add_recognizer(ssn_recognizer)
+
     # Set up analyzer with our updated recognizer registry
     analyzer = AnalyzerEngine(registry=registry)
 
