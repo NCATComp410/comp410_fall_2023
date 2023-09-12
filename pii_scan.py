@@ -41,7 +41,16 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
     registry.add_recognizer(uuid_recognizer)
 
     # Customize SpacyRecognizer to include some additional labels
+    # First remove the default SpacyRecognizer
     registry.remove_recognizer("SpacyRecognizer")
+    # Add ORGANIZATION as an entity even though it is not recommended
+    entities = [
+        "DATE_TIME",
+        "NRP",
+        "LOCATION",
+        "PERSON",
+        "ORGANIZATION"
+    ]
     # Add FAC to be identified as a location
     # FAC = buildings, airports, highways, bridges, etc
     label_groups = [
@@ -51,29 +60,31 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
         ({"NRP"}, {"NORP"}),
         ({"ORGANIZATION"}, {"ORG"}),
     ]
-    spacy_recognizer = SpacyRecognizer(check_label_groups=label_groups)
+    # noinspection PyTypeChecker
+    spacy_recognizer = SpacyRecognizer(check_label_groups=label_groups, supported_entities=entities)
     registry.add_recognizer(spacy_recognizer)
 
     # Set up analyzer with our updated recognizer registry
     analyzer = AnalyzerEngine(registry=registry)
+    # Add ORGANIZATION to the list of labels to be checked
+    labels = analyzer.get_supported_entities()
+    labels.append('ORGANIZATION')
 
     # Show all entities that can be detected for debugging
     if show_supported:
-        return analyzer.get_supported_entities()
+        return labels
 
+    results = analyzer.analyze(text=text,
+                               score_threshold=score_threshold,
+                               language="en",
+                               entities=labels,
+                               return_decision_process=show_details)
     if show_details:
-        results = analyzer.analyze(text=text,
-                                   score_threshold=score_threshold,
-                                   language="en",
-                                   return_decision_process=show_details)
         print(results)
         for r in results:
             decision_process = r.analysis_explanation
             print(decision_process)
-    else:
-        results = analyzer.analyze(text=text,
-                                   score_threshold=score_threshold,
-                                   language='en')
+
     return results
 
 
