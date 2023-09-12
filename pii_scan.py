@@ -1,6 +1,6 @@
 import spacy
 from presidio_analyzer import AnalyzerEngine, RecognizerRegistry, PatternRecognizer, Pattern, RecognizerResult
-from presidio_analyzer.predefined_recognizers import SpacyRecognizer
+from presidio_analyzer.predefined_recognizers import SpacyRecognizer, UsSsnRecognizer
 # Define a pretty printer for debugging
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
@@ -17,6 +17,16 @@ except OSError:
 def show_aggie_pride():
     """Show Aggie Pride"""
     return 'Aggie Pride - Worldwide'
+
+
+class SsnNoValidate(UsSsnRecognizer):
+    # make sure the super class is called to initialize the recognizer
+    def __init__(self):
+        super().__init__()
+
+    def invalidate_result(self, pattern_text: str) -> bool:
+        """Override the default validation to always return false.  This allows us to use invalid SSNs for testing"""
+        return False
 
 
 def analyze_text(text: str, show_supported=False, show_details=False, score_threshold=0.0) -> \
@@ -55,11 +65,10 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
     registry.add_recognizer(spacy_recognizer)
 
     # create a custom US_SSN recognizer
-    ssn_pattern = Pattern(name='ssn_pattern',
-                           regex=r'(?<!\d)\d{3}-\d{2}-\d{4}(?!\d)',
-                           score=0.9)
-    ssn_recognizer = PatternRecognizer(supported_entity='US_SSN',
-                                        patterns=[ssn_pattern])
+    # Remove the default US_SSN recognizer
+    registry.remove_recognizer('UsSsnRecognizer')
+    # Add custom US_SSN recognizer
+    ssn_recognizer = SsnNoValidate()
     registry.add_recognizer(ssn_recognizer)
 
     # Set up analyzer with our updated recognizer registry
