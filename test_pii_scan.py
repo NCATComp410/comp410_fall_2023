@@ -31,6 +31,46 @@ class TestPIIScan(unittest.TestCase):
         results = analyze_text('This is not a UUID: 123e4567-e89b-12d3-a456-42665234000')
         self.assertNotIn('UUID', str(results))
 
+    def test_organization(self):
+        # test a valid organization
+        results = analyze_text('This is an organization: Texas A&M University')
+        self.assertIn('ORGANIZATION', str(results))
+        # test an invalid organization
+        results = analyze_text('This is not an organization: Jones and Smith')
+        self.assertNotIn('ORGANIZATION', str(results))
+
+    def test_base_supported_entities(self):
+        """Test to make sure the default supported entities are returned"""
+        results = analyze_text('', show_supported=True)
+        supported_entities = ['IP_ADDRESS',
+                              'MEDICAL_LICENSE',
+                              'LOCATION',
+                              'EMAIL_ADDRESS',
+                              'DATE_TIME',
+                              'ORGANIZATION',
+                              'CREDIT_CARD',
+                              'CRYPTO',
+                              'AU_MEDICARE',
+                              'AU_ABN',
+                              'PHONE_NUMBER',
+                              'US_PASSPORT',
+                              'IBAN_CODE',
+                              'AU_TFN',
+                              'US_BANK_NUMBER',
+                              'NRP',
+                              'UK_NHS',
+                              'US_SSN',
+                              'SG_NRIC_FIN',
+                              'PERSON',
+                              'URL',
+                              'US_ITIN',
+                              'UUID',
+                              'US_DRIVER_LICENSE',
+                              'AU_ACN',
+                              'ORGANIZATION']
+        for entity in supported_entities:
+            self.assertIn(entity, results)
+
     def test_starts_with_test(self):
         """Test to make sure all test methods start with test"""
         # In order to run as a test case the method name must start with test
