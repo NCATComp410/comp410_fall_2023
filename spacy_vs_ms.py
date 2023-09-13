@@ -1,3 +1,7 @@
+"""
+This script compares the results of Microsoft Presidio and Spacy NLP libraries.
+User can enter a string which will be analyzed by both libraries.
+"""
 import spacy
 from presidio_analyzer import RecognizerResult
 from pii_scan import analyze_text
@@ -41,6 +45,7 @@ def try_ms(text: str, show_explanation=False):
 if __name__ == '__main__':
     # input a test string
     test_str = input('Enter a test string: ')
+    # Only run if a string was entered
     if test_str:
         try_spacy(test_str)
         try_ms(test_str, show_explanation=False)
