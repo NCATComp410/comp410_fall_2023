@@ -38,7 +38,7 @@
 			],
 			"python.testing.pytestEnabled": false,
 			"python.testing.unittestEnabled": true},
-			"extensions": ["ms-python.python"]
+			"extensions": ["ms-python.python", "eamodio.gitlens"]
 		}
 	}
 
