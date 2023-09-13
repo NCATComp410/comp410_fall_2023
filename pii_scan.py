@@ -1,3 +1,7 @@
+"""
+    Main file for PII scanner
+    Initial version shows supported entities
+"""
 import spacy
 from presidio_analyzer import AnalyzerEngine, RecognizerRegistry, PatternRecognizer, Pattern, RecognizerResult
 from presidio_analyzer.predefined_recognizers import SpacyRecognizer
