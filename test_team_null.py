@@ -28,3 +28,14 @@ class TestTeamNull(unittest.TestCase):
         results = analyze_text('My SSN is 123-45-678')
         print(results)
         self.assertNotIn('US_SSN', str(results))
+
+    def test_medical_license(self):
+        """Tests to make sure a potential license is detected"""
+        # positive test case
+        results = analyze_text('my certificate number is: BB1388568')
+        self.assertIn('MEDICAL_LICENSE', str(results))
+
+        # negative test case
+        results = analyze_text('my certificate number is: BB18568')
+        self.assertNotIn('MEDICAL_LICENSE', str(results))
+       
