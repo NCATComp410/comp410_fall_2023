@@ -29,6 +29,18 @@ class TestTeamNull(unittest.TestCase):
         print(results)
         self.assertNotIn('US_SSN', str(results))
 
+    def test_crypto_wallet_detect(self):
+        """Test to make sure crypto wallet is detected"""
+        # positive testcase
+        results = analyze_text('my wallet address is: 16Yeky6GMjeNkAiNcBY7ZhrLoMSgg1BoyZ')
+        print(results)
+        self.assertIn('CRYPTO', str(results))
+
+        # negative testcase
+        results = analyze_text('my wallet address is: 16Yeky6GMjeNkAiNcBY7ZhrLoMSgg1')
+        print(results)
+        self.assertNotIn('CRYPTO', str(results))
+
     def test_medical_license(self):
         """Tests to make sure a potential license is detected"""
         # positive test case
