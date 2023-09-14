@@ -40,3 +40,14 @@ class TestTeamNull(unittest.TestCase):
         results = analyze_text('my wallet address is: 16Yeky6GMjeNkAiNcBY7ZhrLoMSgg1')
         print(results)
         self.assertNotIn('CRYPTO', str(results))
+
+    def test_medical_license(self):
+        """Tests to make sure a potential license is detected"""
+        # positive test case
+        results = analyze_text('my certificate number is: BB1388568')
+        self.assertIn('MEDICAL_LICENSE', str(results))
+
+        # negative test case
+        results = analyze_text('my certificate number is: BB18568')
+        self.assertNotIn('MEDICAL_LICENSE', str(results))
+       
