@@ -95,11 +95,20 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
     if show_supported:
         return labels
 
-    results = analyzer.analyze(text=text,
-                               score_threshold=score_threshold,
-                               language="en",
-                               entities=labels,
-                               return_decision_process=show_details)
+    if text == 'address test':
+        with open('addresses.txt', 'r') as f:
+            for t in f.readlines():
+                results = analyzer.analyze(text=t,
+                                           score_threshold=score_threshold,
+                                           language="en",
+                                           entities=labels,
+                                           return_decision_process=show_details)
+                if 'LOCATION' in str(results) or 'ORGANIZATION' in str(results):
+                    pass
+                else:
+                    print(f'Address not detected {t}', end='')
+                    print(results)
+
     if show_details:
         print(results)
         for r in results:
@@ -110,6 +119,4 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
 
 
 if __name__ == '__main__':
-    print(show_aggie_pride())
-    print('Displaying supported entities')
-    pp.pprint(analyze_text('This is a test', show_supported=True))
+    analyze_text('address test')
