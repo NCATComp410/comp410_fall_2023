@@ -1,22 +1,12 @@
 """
 This script compares the results of Microsoft Presidio and Spacy NLP libraries.
 User can enter a string which will be analyzed by both libraries.
+Added while loop to stay in the program until user enters <enter> to quit to improve load times.
 """
 import spacy
 from presidio_analyzer import RecognizerResult
-from pii_scan import analyze_text
+from pii_scan import analyze_text, nlp
 from typing import List
-
-# make sure the correct spacy model is loaded
-# en_core_web_sm en_core_web_md en_core_web_lg
-spacy_model = 'en_core_web_lg'
-try:
-    nlp = spacy.load(spacy_model)
-except OSError:
-    from spacy.cli import download
-    download(spacy_model)
-    nlp = spacy.load(spacy_model)
-    print(nlp.get_pipe("ner").labels)
 
 
 # NLP on a string using spacy only
@@ -43,9 +33,13 @@ def try_ms(text: str, show_explanation=False):
 
 
 if __name__ == '__main__':
-    # input a test string
-    test_str = input('Enter a test string: ')
-    # Only run if a string was entered correctly
-    if test_str:
-        try_spacy(test_str)
-        try_ms(test_str, show_explanation=False)
+    while True:
+        # input a test string
+        test_str = input('Enter a test string or <enter> to quit: ')
+        # Only run if a string was entered correctly
+        if test_str:
+            try_spacy(test_str)
+            try_ms(test_str, show_explanation=False)
+            print('----------------------------------------')
+        else:
+            break
