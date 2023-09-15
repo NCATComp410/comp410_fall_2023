@@ -50,9 +50,14 @@ class TestTeamNull(unittest.TestCase):
         # negative test case
         results = analyze_text('my certificate number is: BB18568')
         self.assertNotIn('MEDICAL_LICENSE', str(results))
-
     def test_merge_1(self):
         """This test will create a merge conflict"""
         self.assertEqual(1+1, 2)
         self.assertNotEqual('This', 'That')
+       
+    def test_merge_2(self):
+        """This is the second part of the merge conflict example"""
+        # this is merge_2 test
+        self.assertEqual('Merge2', "Merge2")
+        self.assertNotEqual('Merge2', 'Merge1')
        
