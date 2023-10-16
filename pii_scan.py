@@ -115,20 +115,7 @@ if __name__ == '__main__':
     pp.pprint(analyze_text('This is a test', show_supported=True))
 
 
-import re
 
-def analyze_text(text):
-    # Define a regular expression pattern to match US_ITINs (e.g., 123-45-6789)
-    itin_pattern = r'\b\d{3}-\d{2}-\d{4}\b'
-
-    # Use the re.findall method to find all US_ITINs in the text
-    itin_matches = re.findall(itin_pattern, text)
-
-    # Check if any US_ITINs were found
-    if itin_matches:
-        return 'US_ITIN'
-    else:
-        return None
 
 
 
