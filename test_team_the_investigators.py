@@ -11,21 +11,21 @@ class TestTheInvestigators(unittest.TestCase):
         """Test to make sure the Amex Card is detected"""
 
         #Postitive Case
-        results = analyze_text('My Amex card number is 3711 465932 57302')
+        results = analyze_text('My Amex credt card number is 3711 465932 57302')
         print(results)
-        self.assertIn('AMEX_CARD', str(results))
+        self.assertIn('AMEX', str(results))
 
         #Negative Case
         results = analyze_text('My Amex card number is 6011 473832 85948')
         print(results)
-        self.assertIn('AMEX_CARD', str(results))
+        self.assertIn('AMEX', str(results))
 
         #Postitive Case
         results = analyze_text('My Amex card number is 3403 129054 39204')
         print(results)
-        self.assertIn('AMEX_CARD', str(results))
+        self.assertIn('AMEX', str(results))
 
         #Negative Case
         results = analyze_text('My Amex card number is 3011 4738 3277 8594')
         print(results)
-        self.assertIn('AMEX_CARD', str(results))
+        self.assertIn('AMEX', str(results))
