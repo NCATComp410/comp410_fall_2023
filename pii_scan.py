@@ -52,7 +52,13 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                            score=0.9)
     uuid_recognizer = PatternRecognizer(supported_entity='UUID',
                                         patterns=[uuid_pattern])
+
+    interest_pattern = Pattern(name='interestPattern',
+                           regex='((like|love|enjoy))',
+                           score=0.9)
+    interest_recognizer = PatternRecognizer(supported_entity='INTEREST', patterns=[interest_pattern])
     registry.add_recognizer(uuid_recognizer)
+    registry.add_recognizer(interest_recognizer)
 
     # Customize SpacyRecognizer to include some additional labels
     # First remove the default SpacyRecognizer
