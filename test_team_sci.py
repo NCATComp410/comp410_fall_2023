@@ -29,7 +29,7 @@ class TestTeamSci(unittest.TestCase):
         results = analyze_text('My ITIN is 124143536')
         print(results)
         self.assertNotIn('US_ITIN', str(results))
-=======
+        
     # def test_aggie_pride(self):
     #     """Test to make sure the Aggie Pride function works"""
     #     self.assertEqual('Aggie Pride - Worldwide', show_aggie_pride())
