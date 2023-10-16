@@ -54,6 +54,13 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                                         patterns=[uuid_pattern])
     registry.add_recognizer(uuid_recognizer)
 
+
+    #DEWBERRY CUSTOM REGEX FOR LOCATIONS! 
+    dewLocPattern = Pattern(name='DewLOCATION', regex=r'[0-9]+\s[A-Za-z]+\s[A-Za-z]+\s[A-Za-z]+,\s[A-Za-z]+,\s[A-Za-z][A-Za-z]\s\d\d\d\d\d', score=.9)
+    dewLocRecognizer = PatternRecognizer(supported_entity= 'DewLocEnt', patterns=[dewLocPattern])
+    registry.add_recognizer(dewLocRecognizer)
+    #END DEWBERRY CUSTOM REGEX ADDITION
+    
     # Customize SpacyRecognizer to include some additional labels
     # First remove the default SpacyRecognizer
     registry.remove_recognizer("SpacyRecognizer")
