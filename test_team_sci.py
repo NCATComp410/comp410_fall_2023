@@ -10,9 +10,9 @@ class TestTeamSci(unittest.TestCase):
         """Test to make sure ITIN (US_ITIN) is detected"""
 
         # Positive Testcase with a valid ITIN
-        results = analyze_text('My ITIN is 9XX-70-1234')
+        results = analyze_text('My ITIN is 900701234')
         print(results)
-        self.assertNotIn('US_ITIN', str(results))
+        self.assertIn('US_ITIN', str(results))
 
         # Positive Testcase with another valid ITIN
         results = analyze_text('My ITIN is 9XX-71-5678')
