@@ -1,5 +1,5 @@
 import unittest
-from pii_scan import analyze_text, show_aggie_pride
+from pii_scan import analyze_text
 
 class TestTeamSci(unittest.TestCase):
     def test_aggie_pride(self):
@@ -10,21 +10,21 @@ class TestTeamSci(unittest.TestCase):
         """Test to make sure ITIN (US_ITIN) is detected"""
 
         # Positive Testcase with a valid ITIN
-        results = analyze_text('My ITIN is 9XX-70-1234')
+        results = analyze_text('My ITIN is 123-45-6789')
         print(results)
-        self.assertNotIn('US_ITIN', str(results))
+        self.assertIn('US_ITIN', str(results))
 
         # Positive Testcase with another valid ITIN
-        results = analyze_text('My ITIN is 9XX-71-5678')
+        results = analyze_text('My ITIN is 987-65-4321')
+        print(results)
+        self.assertIn('US_ITIN', str(results))
+
+        # Negative Testcase with a string that does not contain an ITIN
+        results = analyze_text('My phone number is 555-123-4567')
         print(results)
         self.assertNotIn('US_ITIN', str(results))
 
         # Negative Testcase with a string that does not contain an ITIN
-        results = analyze_text('My ITIN is 789-01-2345')
-        print(results)
-        self.assertNotIn('US_ITIN', str(results))
-
-        # Negative Testcase with a string that does not contain an ITIN
-        results = analyze_text('My ITIN is 124143536')
+        results = analyze_text('My email address is user@example.com')
         print(results)
         self.assertNotIn('US_ITIN', str(results))
