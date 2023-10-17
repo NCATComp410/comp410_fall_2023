@@ -73,6 +73,13 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                                               patterns=[student_id_pattern])
     registry.add_recognizer(student_id_recognizer)
 
+    american_phone_number_pattern = Pattern(name='american_phone_number',
+                                 regex=r'/1(-|.)?(\d{3}|\(\d{3}\))(-|.)?\d{3}(-|.)?\d{4}',
+                                 score=0.8)
+    american_phone_number_recognizer = PatternRecognizer(supported_entity='AMERICAN_PHONE_NUMBER',
+                                              patterns=[american_phone_number_pattern])
+    registry.add_recognizer(american_phone_number_recognizer)
+
     # Customize SpacyRecognizer to include some additional labels
     # First remove the default SpacyRecognizer
     registry.remove_recognizer("SpacyRecognizer")
