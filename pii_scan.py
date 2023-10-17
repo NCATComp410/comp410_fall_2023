@@ -2,6 +2,10 @@
     Main file for PII scanner
     Initial version shows supported entities
 """
+#import image recognition 
+from PIL import Image
+import face_recognition
+
 import spacy
 from presidio_analyzer import AnalyzerEngine, RecognizerRegistry, PatternRecognizer, Pattern, RecognizerResult
 from presidio_analyzer.predefined_recognizers import SpacyRecognizer, UsSsnRecognizer
@@ -120,6 +124,16 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
             print(decision_process)
 
     return results
+
+
+image = face_recognition.load_image_file("test.jpg")
+
+def analyze_image(image):
+    #imput is of a certain image 
+    #perform calc on amount of faces shown 
+    #return # of faces 
+    face_locations = face_recognition.face_locations(image) 
+    return face_locations
 
 
 if __name__ == '__main__':
