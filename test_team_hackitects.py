@@ -35,3 +35,15 @@ class TestTeamHackitects(unittest.TestCase):
         self.assertFalse(results3) 
         #no image detected, so assert that the array is empty (isEmpty? = True)
         
+
+    def test_Interests(self):
+        """Test to make sure the Aggie Pride function works"""
+        
+        results = analyze_text('I like Bibleman, but I do not like Chris Chan')
+        self.assertIn('INTEREST', str(results))
+
+        results = analyze_text('I love Bitches.')
+        self.assertIn('INTEREST', str(results))
+
+        results = analyze_text('I don\'t like Mondays')
+        self.assertNotIn('INTEREST', str(results))
