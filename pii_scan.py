@@ -58,6 +58,13 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                                         patterns=[uuid_pattern])
     registry.add_recognizer(uuid_recognizer)
 
+    username_pattern = Pattern(name='USERNAME',
+                                 regex=r'^@[\w]{3,25}',
+                                 score=0.8)
+    username_recognizer = PatternRecognizer(supported_entity='USERNAME',
+                                              patterns=[username_pattern])
+    registry.add_recognizer(username_recognizer)
+
 
     #Create an additional pattern to detect a 123456789 Student Id
     student_id_pattern = Pattern(name='student_id',
@@ -76,7 +83,8 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
         "NRP",
         "LOCATION",
         "PERSON",
-        "ORGANIZATION"
+        "ORGANIZATION",
+        "USERNAME"
     ]
     # Add FAC to be identified as a location
     # FAC = buildings, airports, highways, bridges, etc
@@ -86,6 +94,8 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
         ({"DATE_TIME"}, {"DATE", "TIME"}),
         ({"NRP"}, {"NORP"}),
         ({"ORGANIZATION"}, {"ORG"}),
+        ({"USERNAME"}, {"USER"})
+        
     ]
     # noinspection PyTypeChecker
     spacy_recognizer = SpacyRecognizer(check_label_groups=label_groups, supported_entities=entities)
@@ -103,6 +113,9 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
     # Add ORGANIZATION to the list of labels to be checked
     labels = analyzer.get_supported_entities()
     labels.append('ORGANIZATION')
+
+    labels = analyzer.get_supported_entities()
+    labels.append('USERNAME')
 
     # Show all entities that can be detected for debugging
     if show_supported:
