@@ -54,29 +54,23 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                                         patterns=[uuid_pattern])
     registry.add_recognizer(uuid_recognizer)
 
-
-    #Creating detector for philisophical beliefs
+    # Creating detector for philisophical beliefs
     philisophical_beliefs_list = [
-    "atheism",
-    "secularism",
-    "idealism",
-    "stoicism",
-    "rationalism",
-    "relativism",
-    "marxism",
-    "existentialism",
-    "hedonism",
-]
+        "atheism",
+        "atheist",
+        "secularism",
+        "secularist",
+        "idealism",
+        "stoicism",
+        "rationalism",
+        "relativism",
+        "marxism",
+        "existentialism",
+        "hedonism",
+    ]
 
     philbeliefs_recognizer = PatternRecognizer(supported_entity="PHILBELIEFS", deny_list=philisophical_beliefs_list)
-
-    #testing recognizer
-    text1 = "I believe in marxism"
-    result = philbeliefs_recognizer.analyze(text1, entities=["PHILBELIEFS"])
-    print(f"Result:\n {result}")
-    #adding recognizer to registry
-    analyzer = AnalyzerEngine()
-    analyzer.registry.add_recognizer(philbeliefs_recognizer)
+    registry.add_recognizer(philbeliefs_recognizer)
 
     # Customize SpacyRecognizer to include some additional labels
     # First remove the default SpacyRecognizer

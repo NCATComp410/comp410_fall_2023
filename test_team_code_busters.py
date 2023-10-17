@@ -11,9 +11,9 @@ class TestTeamCodeBusters(unittest.TestCase):
         #positive test case
         results = analyze_text("I am a secularist")
         print(results)
-        self.assertIn('',str(results))
+        self.assertIn('PHILBELIEFS', str(results))
 
         #negative test case
         results = analyze_text("I am atheist")
         print(results)
-        self.assertIn('',str(results))
+        self.assertIn('PHILBELIEFS', str(results))
