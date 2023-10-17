@@ -21,46 +21,29 @@ class TestSuperiorCoders(unittest.TestCase):
         self.assertNotIn('STUDENT_ID', str(result))
 
     def test_american_phone_number_detect(self):
-        """Test to ensure an American Phone Number is detected"""
+        #Test to ensure an American Phone Number is detected
+        #positive test case
+        results = analyze_text('My phone number is 1-(199)-555-9461')
+        print(results)
+        self.assertIn('AMERICAN_PHONE_NUMBER', str(results))
 
         #positive test case
-        result = analyze_text('My phone number is 1-(199)-555-9461')
-        print(result)
-        self.assertIn('AMERICAN_PHONE_NUMBER', str(result))
-        
-        #positive test case
-        result = analyze_text('My phone number is 1-(121)-555-2962')
-        print(result)
-        self.assertIn('AMERICAN_PHONE_NUMBER', str(result))
+        results = analyze_text('My phone number is 1.121.555.2962')
+        print(results)
+        self.assertIn('AMERICAN_PHONE_NUMBER', str(results))
 
         #positive test case
-        result = analyze_text('My phone number is 1.121.555.2962')
-        print(result)
-        self.assertIn('AMERICAN_PHONE_NUMBER', str(result))
+        results = analyze_text('My phone number is 11215552962')
+        print(results)
+        self.assertIn('AMERICAN_PHONE_NUMBER', str(results))
 
-        #positive test case
-        result = analyze_text('My phone number is 11215552962')
-        print(result)
-        self.assertIn('AMERICAN_PHONE_NUMBER', str(result))
-
-        #positive test case
-        result = analyze_text('My phone number is 1-121-555-2962')
-        print(result)
-        self.assertIn('AMERICAN_PHONE_NUMBER', str(result))
+        #Test to ensure an American Phone Number is not detected
+        #negetive test case
+        results = analyze_text('My phone number is -120-555-9461')
+        print(results)
+        self.assertNotIn('AMERICAN_PHONE_NUMBER', str(results))
 
         #negetive test case
-        result = analyze_text('My phone number is -9461')
-        print(result)
-        self.assertNotIn('AMERICAN_PHONE_NUMBER', str(result))
-
-        #negetive test case
-        result = analyze_text('My phone number is -120-555-9461')
-        print(result)
-        self.assertNotIn('AMERICAN_PHONE_NUMBER', str(result))
-
-        #negetive test case
-        result = analyze_text('My phone number is 555-9461')
-        print(result)
-        self.assertNotIn('AMERICAN_PHONE_NUMBER', str(result))
-
-
+        results = analyze_text('My phone number is 555-9461')
+        print(results)
+        self.assertNotIn('AMERICAN_PHONE_NUMBER', str(results))
