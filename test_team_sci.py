@@ -15,7 +15,7 @@ class TestTeamSci(unittest.TestCase):
         print(results)
         self.assertIn('US_ITIN', str(results))
 
-        # Positive Testcase with another valid ITIN
+        # Negative Testcase with a string that does not contain an ITIN
         results = analyze_text('My ITIN is 9XX-71-5678')
         print(results)
         self.assertNotIn('US_ITIN', str(results))
