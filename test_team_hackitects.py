@@ -9,18 +9,21 @@ class TestTeamHackitects(unittest.TestCase):
 
     def test_marital_status_detect(self):
         """Testing for Marital Status"""
-        
         # Positive Test Cases - 1
-        results = analyze_text('Marital Status - Married')
+        results = analyze_text('Married')
         print(results)
         self.assertIn('MARITAL_STATUS', str(results))
+        self.assertIn('Married', str(results))
+        self.assertIn('married', str(results))
         
         # Positive Test Cases - 2
-        results = analyze_text('Marital Status - Divorced')
+        results = analyze_text('Divorced')
         print(results)
         self.assertIn('MARITAL_STATUS', str(results))
+        self.assertIn('Divorced', str(results))
+        self.assertIn('divorced', str(results))
 
         # Negative Test Case
-        results = analyze_text('Marital Status - M@rried!')
+        results = analyze_text('M@rried!')
         print(results)
         self.assertNotIn('MARITAL_STATUS', str(results))
