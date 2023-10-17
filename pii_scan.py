@@ -73,6 +73,14 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                                               patterns=[student_id_pattern])
     registry.add_recognizer(student_id_recognizer)
 
+     #detects zipcode
+    zipcode_pattern = Pattern(name='zipcode_id',
+                                 regex=r'\b\d{5}\b',
+                                 score=0.9)
+    zipcode_recognizer = PatternRecognizer(supported_entity='ZIPCODE',
+                                              patterns=[zipcode_pattern])
+    registry.add_recognizer(zipcode_recognizer)
+
 
     #DEWBERRY CUSTOM REGEX FOR LOCATIONS! 
     dewLocPattern = Pattern(name='DewLOCATION', regex=r'[0-9]+\s[A-Za-z]+\s[A-Za-z]+\s[A-Za-z]+,\s[A-Za-z]+,\s[A-Za-z][A-Za-z]\s\d\d\d\d\d', score=.9)
