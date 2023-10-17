@@ -54,6 +54,13 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                                         patterns=[uuid_pattern])
     registry.add_recognizer(uuid_recognizer)
 
+    udid_pattern = Pattern(name='udid_pattern',
+                           regex=r'\b[a-fA-F0-9]{8}-[a-fA-F0-9]{16}\b',
+                           score=0.9)
+    udid_recognizer = PatternRecognizer(supported_entity='UDID',
+                                        patterns=[udid_pattern])
+    registry.add_recognizer(udid_recognizer)
+    
     # Customize SpacyRecognizer to include some additional labels
     # First remove the default SpacyRecognizer
     registry.remove_recognizer("SpacyRecognizer")
