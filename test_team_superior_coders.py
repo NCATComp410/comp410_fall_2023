@@ -50,3 +50,16 @@ class TestSuperiorCoders(unittest.TestCase):
         print(result)
         self.assertNotIn('US_PASSPORT', str(result))
 
+    def test_ipv4_address(self):
+        """Test to show if a ipv4 address is detected"""
+
+        #positive test case
+        result = analyze_text('My ip address is: 123.123.45.233')
+        print(result)
+        self.assertIn('IP_ADDRESS', str(result))
+
+        #negative test case
+        result = analyze_text('My ip address is: 123.123')
+        print(result)
+        self.assertNotIn('IP_ADDRESS', str(result))
+
