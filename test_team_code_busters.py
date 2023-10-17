@@ -11,11 +11,11 @@ class TestTeamCodeBusters(unittest.TestCase):
         '''Testing if eye color is detected'''
 
         #positive test case
-        results = analyze_text('Eye color: Red')
+        results = analyze_text('Eye color: red')
         print(results)
-        self.assertIn('', str(results))
+        self.assertIn('EYE_COLOR', str(results))
 
         #negative test case
         results = analyze_text('Eye color: Ball')
         print(results)
-        self.assertIn('', str(results))
+        self.assertNotIn('EYE_COLOR', str(results))
