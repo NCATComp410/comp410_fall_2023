@@ -45,6 +45,10 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
     registry.load_predefined_recognizers()
 
     # Custom recognizers
+    #custom for place of birth
+    place_of_birth_terms = ['place of birth', 'birthplace', 'born']
+    pob_recognizer = PatternRecognizer(supported_entity="POB", deny_list=place_of_birth_terms)
+    registry.add_recognizer(pob_recognizer)
     # https://microsoft.github.io/presidio/analyzer/adding_recognizers/
     # Create an additional pattern to detect a 8-4-4-4-12 UUID
     uuid_pattern = Pattern(name='uuid_pattern',
@@ -52,7 +56,22 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                            score=0.9)
     uuid_recognizer = PatternRecognizer(supported_entity='UUID',
                                         patterns=[uuid_pattern])
+
+    interest_pattern = Pattern(name='interestPattern',
+                           regex='(?<=((?<!(doe?s?n\'?t\s|not\s))(like\s|love\s|enjoy\s|interested\sin\s)))[^\.\,\;]+',
+                           score=0.9)
+    interest_recognizer = PatternRecognizer(supported_entity='INTEREST', patterns=[interest_pattern])
     registry.add_recognizer(uuid_recognizer)
+    registry.add_recognizer(interest_recognizer)
+
+
+    #Create an additional pattern to detect a 123456789 Student Id
+    student_id_pattern = Pattern(name='student_id',
+                                 regex=r'\b\d{9}\b',
+                                 score=0.8)
+    student_id_recognizer = PatternRecognizer(supported_entity='STUDENT_ID',
+                                              patterns=[student_id_pattern])
+    registry.add_recognizer(student_id_recognizer)
 
     # Customize SpacyRecognizer to include some additional labels
     # First remove the default SpacyRecognizer

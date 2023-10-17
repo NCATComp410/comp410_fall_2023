@@ -19,3 +19,19 @@ class TestTheInvestigators(unittest.TestCase):
         results = analyze_text('my email address is: yadayadahotmailcom')
         print(results)
         self.assertNotIn('EMAIL_ADDRESS', str(results))
+
+    def test_place_of_birth_detect(self):
+        """Test to make sure the place of birth is detected"""
+        #positive test
+        test_str = 'I was born in College Station, Texas.'
+        results = analyze_text(test_str)
+        self.assertIn('LOCATION', str(results))
+        # expect POB to be detected
+        self.assertIn('POB', str(results))
+
+        #negative test
+        test_str = 'I live in College Station, Texas.'
+        results = analyze_text(test_str)
+        self.assertIn('LOCATION', str(results))
+        # expect POB to be detected
+        self.assertNotIn('POB', str(results))
