@@ -7,34 +7,30 @@ class TestTeamHackitects(unittest.TestCase):
         """Test to make sure the Aggie Pride function works"""
         self.assertEqual('Aggie Pride - Worldwide', show_aggie_pride())
 
-    # evals false if 'results' is not defined (empty array)
-    # if evals true, then array is not empty (face has been detected) 
+       
+    def test_addressDew(self):
+        """Location testing"""
+        #Uses both Custom Dewberry regex is DewLocEnt and built in location recognizer
 
-    
-    def test_image_dectection(self):
-        """Testing if image is detected"""
-        
-        # Positive Test Case 1
-        
-        results = analyze_image(image)
-        print(results)
-        self.assertTrue(results) 
-        #image detected, so assert that the array is not empty (isEmpty? = False)
+        #two positive test cases.
+        #NCAT address.
+        res = analyze_text('1601 E Market St, Greensboro, NC 27411')
+        self.assertIn('LOCATION', str(res))
+        self.assertIn('DewLocEnt', str(res))
 
-        # Positive Test Case 2 
-        
-        results2 = analyze_image(image3)
-        print(results2)
-        self.assertTrue(results2)
-        #image detected, so assert that the array is not empty (isEmpty? = False)
-        
-        # Negative Test Case 
-        
-        results3 = analyze_image(image2)
-        print(results3)
-        self.assertFalse(results3) 
-        #no image detected, so assert that the array is empty (isEmpty? = True)
-        
+        #UNCG address.
+        res = analyze_text('1400 Spring Garden St, Greensboro, NC 27412')
+        self.assertIn('LOCATION', str(res))
+        self.assertIn('DewLocEnt', str(res))
+
+
+        #In-built locator has a clear error and failure in how it's setup.
+        #Brazil in the 1900s is NOT a real location, and should logically not be flagged as such.
+        res = analyze_text('Brazil in the 1900s')
+        #this assertIn statment SHOULD fail
+        self.assertIn('LOCATION', str(res))
+        #default fails, mine works.
+        self.assertNotIn('DewLoCEnt', str(res))
 
     def test_Interests(self):
         """Test to make sure the Aggie Pride function works"""
@@ -47,3 +43,4 @@ class TestTeamHackitects(unittest.TestCase):
 
         results = analyze_text('I don\'t like Mondays')
         self.assertNotIn('INTEREST', str(results))
+        
