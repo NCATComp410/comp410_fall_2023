@@ -121,6 +121,11 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
 
     return results
 
+    # Custom Regex for detecting 12 digit license
+    thorlicenseNum = Pattern(name='ThorPattern', regex=(r'\d\d\d\d\d\d\d\d\d\d\d\d'), score =.9)
+    thorLicenseRecoginer = PatternRecognizer(supported_entity= 'ThorLicenseRec', patterns=[thorlicenseNum])
+    registry.add_recognizer(thorLicenseRecoginer)
+
 
 if __name__ == '__main__':
     print(show_aggie_pride())
