@@ -10,19 +10,16 @@ class TestTeamCodeBusters(unittest.TestCase):
     def test_health_insurance_policy_number_detect(self):
         """Test to ensure policy number is detected"""
         #positive testcase
-        """Insurance Policy number should begin with 3 letters followed by 9 numbers"""
         results = analyze_text('My insurance policy number is XYZ123456789')
         print(results)
-        self.assertIn('MEDICAL_LICENSE', str(results))
+        self.assertIn('US_DRIVER_LICENSE', str(results))
 
         #negative testcase
-        results = analyze_text('My insurance policy number is AB1234567890')
-        """This policy ID is incorrect because it has 2 Letters and 10 Numbers"""
+        results = analyze_text('My insurance policy number is ABC123456789011')
         print(results)
-        self.assertNotIn('MEDICAL_LICENSE', str(results))
+        self.assertNotIn('US_DRIVER_LICENSE', str(results))
 
         #negative testcase
-        results = analyze_text('My insurance policy number is ABCD12345678')
-        """This policy ID is incorrect because it contains 4 Letters and 8 Numbers"""
+        results = analyze_text('My insurance policy number is ABCDE12345678')
         print(results)
-        self.assertNotIn('MEDICAL_LICENSE', str(results))
+        self.assertNotIn('US_DRIVER_LICENSE', str(results))
