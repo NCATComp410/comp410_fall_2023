@@ -77,6 +77,15 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                                               patterns=[student_id_pattern])
     registry.add_recognizer(student_id_recognizer)
 
+ #Detecting Bank Account Number
+    bankAccount_pattern = Pattern(name='BA_id',
+                                 regex=r'\b\d{10}\b',
+                                 score=0.9)
+    bankAccount_recognizer = PatternRecognizer(supported_entity='BANKACC',
+                                              patterns=[bankAccount_pattern])
+    registry.add_recognizer(bankAccount_recognizer)
+    
+
 
     #DEWBERRY CUSTOM REGEX FOR LOCATIONS! 
     dewLocPattern = Pattern(name='DewLOCATION', regex=r'[0-9]+\s[A-Za-z]+\s[A-Za-z]+\s[A-Za-z]+,\s[A-Za-z]+,\s[A-Za-z][A-Za-z]\s\d\d\d\d\d', score=.9)
