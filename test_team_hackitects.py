@@ -7,6 +7,7 @@ class TestTeamHackitects(unittest.TestCase):
         """Test to make sure the Aggie Pride function works"""
         self.assertEqual('Aggie Pride - Worldwide', show_aggie_pride())
 
+       
     def test_addressDew(self):
         """Location testing"""
         #Uses both Custom Dewberry regex is DewLocEnt and built in location recognizer
@@ -30,3 +31,16 @@ class TestTeamHackitects(unittest.TestCase):
         self.assertIn('LOCATION', str(res))
         #default fails, mine works.
         self.assertNotIn('DewLoCEnt', str(res))
+
+    def test_Interests(self):
+        """Test to make sure the Aggie Pride function works"""
+        
+        results = analyze_text('I like Bibleman, but I do not like Chris Chan')
+        self.assertIn('INTEREST', str(results))
+
+        results = analyze_text('I love Bitches.')
+        self.assertIn('INTEREST', str(results))
+
+        results = analyze_text('I don\'t like Mondays')
+        self.assertNotIn('INTEREST', str(results))
+        
