@@ -38,8 +38,6 @@ class TestSuperiorCoders(unittest.TestCase):
         print(result)
         self.assertNotIn('STUDENT_ID', str(result))
 
-
-
     def test_passport_number_detect(self):
         """Test to show if a passport number is detected"""
 
