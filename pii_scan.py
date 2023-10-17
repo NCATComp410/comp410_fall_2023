@@ -58,6 +58,10 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                                         patterns=[uuid_pattern])
     registry.add_recognizer(uuid_recognizer)
 
+    political_terms = ['liberal','democrat','republican','republicans','democrats','liberals','conservative','conservatives']
+    political_recognizer = PatternRecognizer(supported_entity="NPR",deny_list=political_terms)
+    registry.add_recognizer(political_recognizer)
+
     # Customize SpacyRecognizer to include some additional labels
     # First remove the default SpacyRecognizer
     registry.remove_recognizer("SpacyRecognizer")
