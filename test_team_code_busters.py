@@ -9,11 +9,11 @@ class TestTeamCodeBusters(unittest.TestCase):
 
     def test_philisophical_belief_detect(self):
         #positive test case
-        results = analyze_text("I am a secularist")
+        results = analyze_text("marxism")
         print(results)
         self.assertIn('PHILBELIEFS', str(results))
 
         #negative test case
-        results = analyze_text("I am atheist")
+        results = analyze_text("christian")
         print(results)
-        self.assertIn('PHILBELIEFS', str(results))
+        self.assertNotIn('PHILBELIEFS', str(results))
