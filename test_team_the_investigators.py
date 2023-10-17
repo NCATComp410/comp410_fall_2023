@@ -35,14 +35,15 @@ class TestTheInvestigators(unittest.TestCase):
         self.assertIn('LOCATION', str(results))
         # expect POB to be detected
         self.assertNotIn('POB', str(results))
-def test_full_names_detect(self):
-     """Test to make sure full names are detected"""
-    # Positive test case
-     results = analyze_text('John William Smith')
-     print(results)
-     self.assertIn('PERSON', str(results))
+    
+    def test_full_names_detect(self):
+        """Test to make sure full names are detected"""
+        #Positive test case
+        results = analyze_text('John William Smith')
+        print(results)
+        self.assertIn('PERSON', str(results))
 
-    # Negative test case
-     results = analyze_text('John@123')
-     print(results)
-     self.assertNotIn('PERSON', str(results))
+        #Negative test case
+        results = analyze_text('John@123')
+        print(results)
+        self.assertNotIn('PERSON', str(results))
