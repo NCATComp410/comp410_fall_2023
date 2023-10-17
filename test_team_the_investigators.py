@@ -12,7 +12,7 @@ class TestTheInvestigators(unittest.TestCase):
         print(results)
         self.assertIn('CREDIT_CARD', str(results))
 
-        # Positive Testcase
+        # Negative Testcase
         results = analyze_text('My Amex credit card number is 4400 000000 00009')
         print(results)
         self.assertNotIn('CREDIT_CARD', str(results))
