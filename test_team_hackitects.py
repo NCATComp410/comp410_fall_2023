@@ -1,5 +1,5 @@
 import unittest
-from pii_scan import show_aggie_pride, analyze_text
+from pii_scan import show_aggie_pride, analyze_text, analyze_image, image, image2, image3
 
 
 class TestTeamHackitects(unittest.TestCase):
@@ -19,14 +19,37 @@ class TestTeamHackitects(unittest.TestCase):
         results = analyze_text('divorced')
         print(results)
         self.assertIn('MARITALSTATS', str(results))
-        # self.assertIn('Divorced', str(results))
-        # self.assertIn('divorced', str(results))
+
 
         # # Negative Test Case
         results = analyze_text('M@rried!')
         print(results)
-        self.assertNotIn('MARITAL_STATUS', str(results))
+        self.assertNotIn('MARITALSTATS', str(results))
         
+    def test_addressDew(self):
+        """Location testing"""
+        #Uses both Custom Dewberry regex is DewLocEnt and built in location recognizer
+
+        #two positive test cases.
+        #NCAT address.
+        res = analyze_text('1601 E Market St, Greensboro, NC 27411')
+        self.assertIn('LOCATION', str(res))
+        self.assertIn('DewLocEnt', str(res))
+
+        #UNCG address.
+        res = analyze_text('1400 Spring Garden St, Greensboro, NC 27412')
+        self.assertIn('LOCATION', str(res))
+        self.assertIn('DewLocEnt', str(res))
+
+
+        #In-built locator has a clear error and failure in how it's setup.
+        #Brazil in the 1900s is NOT a real location, and should logically not be flagged as such.
+        res = analyze_text('Brazil in the 1900s')
+        #this assertIn statment SHOULD fail
+        self.assertIn('LOCATION', str(res))
+        #default fails, mine works.
+        self.assertNotIn('DewLoCEnt', str(res))
+
     def test_Interests(self):
         """Test to make sure the Aggie Pride function works"""
         
