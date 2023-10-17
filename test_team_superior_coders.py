@@ -19,3 +19,23 @@ class TestSuperiorCoders(unittest.TestCase):
         results = analyze_text('My IP address is 123.123.23')
         print(results)
         self.assertNotIn('IP_ADDRESS', str(results))
+
+    def test_student_id_detect(self):
+        """Test to show if a student ID is detected"""
+
+        #positive test case
+        result = analyze_text('my student ID is: 926491673')
+        print(result)
+        self.assertIn('STUDENT_ID', str(result))
+
+        #positive test case
+        result = analyze_text('my student ID is: 123456789')
+        print(result)
+        self.assertIn('STUDENT_ID', str(result))
+
+        #negative test case
+        result = analyze_text('my student ID is: 92649')
+        print(result)
+        self.assertNotIn('STUDENT_ID', str(result))
+
+
