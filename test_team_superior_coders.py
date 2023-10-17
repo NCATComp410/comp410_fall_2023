@@ -39,3 +39,27 @@ class TestSuperiorCoders(unittest.TestCase):
         self.assertNotIn('STUDENT_ID', str(result))
 
 
+
+    def test_passport_number_detect(self):
+        """Test to show if a passport number is detected"""
+
+        #positive test case
+        result = analyze_text('my passport number is: 123456789')
+        print(result)
+        self.assertIn('US_PASSPORT', str(result))
+
+        #positive test case
+        result = analyze_text('my passport number is: 345627440')
+        print(result)
+        self.assertIn('US_PASSPORT', str(result))
+
+        #negative test case
+        result = analyze_text('my passport number is: 12345678')
+        print(result)
+        self.assertNotIn('US_PASSPORT', str(result))
+
+        #negative test case
+        result = analyze_text('my passport number is: 12345678AG1')
+        print(result)
+        self.assertNotIn('US_PASSPORT', str(result))
+
