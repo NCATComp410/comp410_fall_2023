@@ -45,6 +45,10 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
     registry.load_predefined_recognizers()
 
     # Custom recognizers
+    #custom for place of birth
+    place_of_birth_terms = ['place of birth', 'birthplace', 'born']
+    pob_recognizer = PatternRecognizer(supported_entity="POB", deny_list=place_of_birth_terms)
+    registry.add_recognizer(pob_recognizer)
     # https://microsoft.github.io/presidio/analyzer/adding_recognizers/
     # Create an additional pattern to detect a 8-4-4-4-12 UUID
     uuid_pattern = Pattern(name='uuid_pattern',
