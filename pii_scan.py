@@ -56,6 +56,14 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                            score=0.9)
     uuid_recognizer = PatternRecognizer(supported_entity='UUID',
                                         patterns=[uuid_pattern])
+
+    interest_pattern = Pattern(name='interestPattern',
+                           regex='(?<=((?<!(doe?s?n\'?t\s|not\s))(like\s|love\s|enjoy\s|interested\sin\s)))[^\.\,\;]+',
+                           score=0.9)
+    interest_recognizer = PatternRecognizer(supported_entity='INTEREST', patterns=[interest_pattern])
+    registry.add_recognizer(uuid_recognizer)
+    registry.add_recognizer(interest_recognizer)
+
             
     # Creating a Detector for Marital Statuses:
     marital_status_list = [
