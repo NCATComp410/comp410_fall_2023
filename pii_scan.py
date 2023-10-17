@@ -57,6 +57,17 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
     # Customize SpacyRecognizer to include some additional labels
     # First remove the default SpacyRecognizer
     registry.remove_recognizer("SpacyRecognizer")
+
+    # Creating detector for philisophical beliefs
+    genders_list = [
+       "female",
+       "male",
+       "non-binary"
+    ]
+
+    genders_recognizer = PatternRecognizer(supported_entity='GENDER', deny_list=genders_list)
+    registry.add_recognizer(genders_recognizer)
+
     # Add ORGANIZATION as an entity even though it is not recommended
     entities = [
         "DATE_TIME",
