@@ -68,6 +68,14 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
     registry.add_recognizer(uuid_recognizer)
     registry.add_recognizer(interest_recognizer)
 
+    #Custom recognizer for detecting a 3-digit credit score
+    # only recongnizes a number between 300 and 850
+    credit_score_pattern = Pattern(name='credit_score_pattern',
+                                   regex=r'\b(3[0-9]{2}|[4-7][0-9]{2}|850)\b',
+                                   score=0.9)
+    credit_score_recognizer = PatternRecognizer(supported_entity='CREDIT_CARD',
+                                                patterns=[credit_score_pattern])
+    registry.add_recognizer(credit_score_recognizer)
 
     #Create an additional pattern to detect a 123456789 Student Id
     student_id_pattern = Pattern(name='student_id',
