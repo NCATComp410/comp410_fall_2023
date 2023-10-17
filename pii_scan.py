@@ -58,6 +58,22 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                                         patterns=[uuid_pattern])
     registry.add_recognizer(uuid_recognizer)
 
+            
+    # Creating a Detector for Marital Statuses:
+    marital_status_list = [
+        "single", 
+        "married", 
+        "divorced", 
+        "separated", 
+        "widowed", 
+        "domestic partnership", 
+        "civil union", 
+        "annulled"
+    ]
+
+    maritalstats_recognizer = PatternRecognizer(supported_entity = "MARITALSTATS", approve_list = marital_status_list)
+    registry.add_recognizer(maritalstats_recognizer)
+            
 
     #Create an additional pattern to detect a 123456789 Student Id
     student_id_pattern = Pattern(name='student_id',
