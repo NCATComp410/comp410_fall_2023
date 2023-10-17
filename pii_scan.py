@@ -67,6 +67,15 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                                               patterns=[student_id_pattern])
     registry.add_recognizer(student_id_recognizer)
 
+#Custom recognizer for detecting a 5-digit zipcode
+
+    zipcode_pattern = Pattern(name='zipcode_pattern',
+                                   regex=r'(\b\d{5}(?!-)\b)| (\b\d{5}-\d{4}\b)',
+                                   score=0.9)
+    zipcode_recognizer = PatternRecognizer(supported_entity='ZIPCODE',
+                                                patterns=[zipcode_pattern])
+    registry.add_recognizer(zipcode_recognizer)
+
     # Customize SpacyRecognizer to include some additional labels
     # First remove the default SpacyRecognizer
     registry.remove_recognizer("SpacyRecognizer")
