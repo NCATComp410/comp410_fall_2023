@@ -73,6 +73,15 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                                               patterns=[student_id_pattern])
     registry.add_recognizer(student_id_recognizer)
 
+    #Create a pattern to detect fourteen digit phone numbers
+    international_pn_pattern = Pattern(name='international_pn',
+                                 regex=r'^\d{3}-\d{3}-\d{4}-\d{4}', 
+                                 score=0.9)
+    international_pn_recognizer = PatternRecognizer(supported_entity='INTERNATIONAL_PN',
+                                              patterns=[international_pn_pattern])
+    registry.add_recognizer(international_pn_recognizer)
+
+
     # Customize SpacyRecognizer to include some additional labels
     # First remove the default SpacyRecognizer
     registry.remove_recognizer("SpacyRecognizer")
