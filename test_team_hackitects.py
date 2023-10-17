@@ -16,7 +16,7 @@ class TestTeamHackitects(unittest.TestCase):
         self.assertIn('MARITALSTATS', str(results))
 
                # # Positive Test Cases - 2
-        results = analyze_text('Divorced')
+        results = analyze_text('divorced')
         print(results)
         self.assertIn('MARITALSTATS', str(results))
         # self.assertIn('Divorced', str(results))

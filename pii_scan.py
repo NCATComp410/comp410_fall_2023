@@ -71,7 +71,7 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
         "annulled"
     ]
 
-    maritalstats_recognizer = PatternRecognizer(supported_entity = "MARITALSTATS", approve_list = marital_status_list)
+    maritalstats_recognizer = PatternRecognizer(supported_entity = "MARITALSTATS", deny_list= marital_status_list)
     registry.add_recognizer(maritalstats_recognizer)
             
 
