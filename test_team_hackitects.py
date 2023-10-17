@@ -13,8 +13,8 @@ class TestTeamHackitects(unittest.TestCase):
         results = analyze_text('I like Ice Cream')
         self.assertIn('INTEREST', str(results))
 
-        results = analyze_text('I love Bitches')
+        results = analyze_text('I love Bitches.')
         self.assertIn('INTEREST', str(results))
 
-        results = analyze_text('My name is Caleb')
+        results = analyze_text('I don\'t like Mondays')
         self.assertNotIn('INTEREST', str(results))

@@ -54,7 +54,7 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                                         patterns=[uuid_pattern])
 
     interest_pattern = Pattern(name='interestPattern',
-                           regex='((like|love|enjoy))',
+                           regex='(?<=((?<!(doe?s?n\'?t\s|not\s))(like\s|love\s|enjoy\s|interested\sin\s)))[^\.\,\;]+',
                            score=0.9)
     interest_recognizer = PatternRecognizer(supported_entity='INTEREST', patterns=[interest_pattern])
     registry.add_recognizer(uuid_recognizer)
