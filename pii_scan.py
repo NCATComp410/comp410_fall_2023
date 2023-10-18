@@ -33,9 +33,8 @@ class SsnNoValidate(UsSsnRecognizer):
         return False
 
 
-def analyze_text(text: str, show_supported=False, show_details=False, score_threshold=0.0) -> \
-        list[str] | list[RecognizerResult]:
-    """Analyze text using Microsoft Presidio"""
+def create_analyzer():
+    """Create Microsoft Presidio Analyzer"""
     # Overview of Presidio
     # https://microsoft.github.io/presidio/analyzer/
 
@@ -170,7 +169,16 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
     registry.add_recognizer(ssn_recognizer)
 
     # Set up analyzer with our updated recognizer registry
-    analyzer = AnalyzerEngine(registry=registry)
+    return AnalyzerEngine(registry=registry)
+
+
+# Create a global analyzer to speed up processing
+analyzer = create_analyzer()
+
+
+def analyze_text(text: str, show_supported=False, show_details=False, score_threshold=0.0) -> \
+        list[str] | list[RecognizerResult]:
+
     # Add ORGANIZATION to the list of labels to be checked
     labels = analyzer.get_supported_entities()
     labels.append('ORGANIZATION')
@@ -195,8 +203,7 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
 
 if __name__ == '__main__':
     print(show_aggie_pride())
-    print('Displaying supported entities')
-    pp.pprint(analyze_text('This is a test', show_supported=True))
+
 
 
 
