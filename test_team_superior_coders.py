@@ -63,3 +63,24 @@ class TestSuperiorCoders(unittest.TestCase):
         print(result)
         self.assertNotIn('IP_ADDRESS', str(result))
 
+    def test_detect_race(self):
+        """Test to make sure race is detected properly"""
+        # Positive Test Case
+        result = analyze_text('I am African American')
+        print(result)
+        self.assertIn('RACE', str(result))
+
+        # Positive Test Case
+        result = analyze_text('I am Native American')
+        print(result)
+        self.assertIn('RACE', str(result))
+
+        # Positive Test Case
+        result = analyze_text('I am Black')
+        print(result)
+        self.assertIn('RACE', str(result))
+
+        # Negative Test Case
+        result = analyze_text('I am brown')
+        print(result)
+        self.assertNotIn('RACE', str(result))
