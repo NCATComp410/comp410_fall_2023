@@ -2,10 +2,6 @@
     Main file for PII scanner
     Initial version shows supported entities
 """
-#import image recognition 
-from PIL import Image
-import face_recognition
-
 import spacy
 from presidio_analyzer import AnalyzerEngine, RecognizerRegistry, PatternRecognizer, Pattern, RecognizerResult
 from presidio_analyzer.predefined_recognizers import SpacyRecognizer, UsSsnRecognizer
@@ -68,6 +64,33 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
     registry.add_recognizer(uuid_recognizer)
     registry.add_recognizer(interest_recognizer)
 
+    #Custom recognizer for detecting a 3-digit credit score
+    # only recongnizes a number between 300 and 850
+    credit_score_pattern = Pattern(name='credit_score_pattern',
+                                   regex=r'\b(3[0-9]{2}|[4-7][0-9]{2}|850)\b',
+                                   score=0.9)
+    credit_score_recognizer = PatternRecognizer(supported_entity='CREDIT_CARD',
+                                                patterns=[credit_score_pattern])
+    registry.add_recognizer(credit_score_recognizer)
+
+    # Creating detector for philisophical beliefs
+    philisophical_beliefs_list = [
+        "atheism",
+        "atheist",
+        "secularism",
+        "secularist",
+        "idealism",
+        "stoicism",
+        "rationalism",
+        "relativism",
+        "marxism",
+        "existentialism",
+        "hedonism",
+    ]
+
+    philbeliefs_recognizer = PatternRecognizer(supported_entity="PHILBELIEFS", deny_list=philisophical_beliefs_list)
+    registry.add_recognizer(philbeliefs_recognizer)
+
 
     #Create an additional pattern to detect a 123456789 Student Id
     student_id_pattern = Pattern(name='student_id',
@@ -87,6 +110,17 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
     # Customize SpacyRecognizer to include some additional labels
     # First remove the default SpacyRecognizer
     registry.remove_recognizer("SpacyRecognizer")
+
+    # Creating detector for philisophical beliefs
+    genders_list = [
+       "female",
+       "male",
+       "non-binary"
+    ]
+
+    genders_recognizer = PatternRecognizer(supported_entity='GENDER', deny_list=genders_list)
+    registry.add_recognizer(genders_recognizer)
+
     # Add ORGANIZATION as an entity even though it is not recommended
     entities = [
         "DATE_TIME",
@@ -138,30 +172,6 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
 
     return results
 
-
-image = face_recognition.load_image_file("test.jpg")  # Image of Joe Byron
-image2 = face_recognition.load_image_file("noface.jpg") # Image of Canadian Landscape
-image3 = face_recognition.load_image_file("otherdude.jpg") # Image of Stock Dude #47
-
-# analyze images accepts an image and returns an array of the locations of the face of each image 
-# if there is no image then return an empty array
-def analyze_image(image):
-    #imput is of a certain image 
-    #perform calc on amount of faces shown 
-    #return # of faces 
-    face_locations = face_recognition.face_locations(image) 
-    return face_locations
-
-#Testing implementations and correctness 
-
-# print('Does face_locations work?')
-# print(analyze_image(image)) 
-
-# print('Now try it again')
-# print(analyze_image(image3))
-
-# print('No faces should return empty array?') 
-# print(analyze_image(image2))
 
 if __name__ == '__main__':
     print(show_aggie_pride())
