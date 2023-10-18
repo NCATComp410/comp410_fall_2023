@@ -28,9 +28,9 @@ class TestTeamTechniGALS(unittest.TestCase):
         """Test to find bank account number"""
         results = analyze_text('my bank account number is: 1234567890')
         print(results)
-        self.assertIn('BANKACC', str(results))
+        self.assertIn('US_BANK_NUMBER', str(results))
 
-        results = analyze_text('my bank account number is: 12345678910')
+        results = analyze_text('my bank account number is: ABC123')
         print(results)
-        self.assertNotIn('BANKACC', str(results))
+        self.assertNotIn('US_BANK_NUMBER', str(results))
 
