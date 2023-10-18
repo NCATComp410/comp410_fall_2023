@@ -59,6 +59,14 @@ def create_analyzer():
                                         patterns=[uuid_pattern])
     registry.add_recognizer(uuid_recognizer)
 
+    # Create an additional pattern to detect a UDID
+    udid_pattern = Pattern(name='udid_pattern',
+                           regex=r'\b[a-fA-F0-9]{8}-[a-fA-F0-9]{16}\b',
+                           score=0.9)
+    udid_recognizer = PatternRecognizer(supported_entity='UDID',
+                                        patterns=[udid_pattern])
+    registry.add_recognizer(udid_recognizer)
+
     interest_pattern = Pattern(name='interestPattern',
                                regex='(?<=((?<!(doe?s?n\'?t\s|not\s))(like\s|love\s|enjoy\s|interested\sin\s)))[^\.\,\;]+',
                                score=0.9)
