@@ -23,3 +23,14 @@ class TestTeamTechniGALS(unittest.TestCase):
         results = analyze_text('my gender is november')
         print(results)
         self.assertNotIn('GENDER', str(results))
+
+    def test_bank_account_number(self):
+        """Test to find bank account number"""
+        results = analyze_text('my bank account number is: 1234567890')
+        print(results)
+        self.assertIn('US_BANK_NUMBER', str(results))
+
+        results = analyze_text('my bank account number is: ABC123')
+        print(results)
+        self.assertNotIn('US_BANK_NUMBER', str(results))
+
