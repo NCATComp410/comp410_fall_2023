@@ -63,21 +63,14 @@ class TestTeamHackitects(unittest.TestCase):
         self.assertNotIn('INTEREST', str(results))
 
     def test_ncdriversLicense(self):
-        #Positive Test Case 1
+        # Positive Test Case 1
         res = analyze_text('111111111111')
-        self.assertIn('ThorLicenseRec',str(res))
-
+        self.assertIn('NCDL', str(res))
 
         # Negative test Case because of the dots
         res = analyze_text('1234.5678.9012')
-        self.assertNotIn('ThorLicenseRec',str(res))
+        self.assertNotIn('NCDL', str(res))
 
-
-
-        #Negative Test Case because it is 13 digits
+        # Negative Test Case because it is 13 digits
         res = analyze_text('1234567890123')
-        self.assertNotIn('ThorLicenseRec',str(res))
-
-
-
-
+        self.assertNotIn('NCDL', str(res))

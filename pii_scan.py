@@ -227,6 +227,11 @@ def create_analyzer():
     ssn_recognizer = SsnNoValidate()
     registry.add_recognizer(ssn_recognizer)
 
+    # Custom Regex for detecting 12 digit license
+    thorlicenseNum = Pattern(name='ThorPattern', regex=r'\b\d{12}\b', score=.9)
+    thorLicenseRecognizer = PatternRecognizer(supported_entity='NCDL', patterns=[thorlicenseNum])
+    registry.add_recognizer(thorLicenseRecognizer)
+
     # Set up analyzer with our updated recognizer registry
     return AnalyzerEngine(registry=registry)
 
@@ -257,11 +262,6 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
             print(decision_process)
 
     return results
-
-    # Custom Regex for detecting 12 digit license
-    thorlicenseNum = Pattern(name='ThorPattern', regex=(r'\d\d\d\d\d\d\d\d\d\d\d\d'), score =.9)
-    thorLicenseRecoginer = PatternRecognizer(supported_entity= 'ThorLicenseRec', patterns=[thorlicenseNum])
-    registry.add_recognizer(thorLicenseRecoginer)
 
 
 if __name__ == '__main__':
