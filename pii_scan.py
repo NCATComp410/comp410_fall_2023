@@ -56,11 +56,71 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                            score=0.9)
     uuid_recognizer = PatternRecognizer(supported_entity='UUID',
                                         patterns=[uuid_pattern])
-    registry.add_recognizer(uuid_recognizer)
 
+    interest_pattern = Pattern(name='interestPattern',
+                           regex='(?<=((?<!(doe?s?n\'?t\s|not\s))(like\s|love\s|enjoy\s|interested\sin\s)))[^\.\,\;]+',
+                           score=0.9)
+    interest_recognizer = PatternRecognizer(supported_entity='INTEREST', patterns=[interest_pattern])
+    registry.add_recognizer(uuid_recognizer)
+    registry.add_recognizer(interest_recognizer)
+
+    #Custom recognizer for detecting a 3-digit credit score
+    # only recongnizes a number between 300 and 850
+    credit_score_pattern = Pattern(name='credit_score_pattern',
+                                   regex=r'\b(3[0-9]{2}|[4-7][0-9]{2}|850)\b',
+                                   score=0.9)
+    credit_score_recognizer = PatternRecognizer(supported_entity='CREDIT_CARD',
+                                                patterns=[credit_score_pattern])
+    registry.add_recognizer(credit_score_recognizer)
+
+    # Creating detector for philisophical beliefs
+    philisophical_beliefs_list = [
+        "atheism",
+        "atheist",
+        "secularism",
+        "secularist",
+        "idealism",
+        "stoicism",
+        "rationalism",
+        "relativism",
+        "marxism",
+        "existentialism",
+        "hedonism",
+    ]
+
+    philbeliefs_recognizer = PatternRecognizer(supported_entity="PHILBELIEFS", deny_list=philisophical_beliefs_list)
+    registry.add_recognizer(philbeliefs_recognizer)
+
+
+    #Create an additional pattern to detect a 123456789 Student Id
+    student_id_pattern = Pattern(name='student_id',
+                                 regex=r'\b\d{9}\b',
+                                 score=0.8)
+    student_id_recognizer = PatternRecognizer(supported_entity='STUDENT_ID',
+                                              patterns=[student_id_pattern])
+    registry.add_recognizer(student_id_recognizer)
+
+
+    #DEWBERRY CUSTOM REGEX FOR LOCATIONS! 
+    dewLocPattern = Pattern(name='DewLOCATION', regex=r'[0-9]+\s[A-Za-z]+\s[A-Za-z]+\s[A-Za-z]+,\s[A-Za-z]+,\s[A-Za-z][A-Za-z]\s\d\d\d\d\d', score=.9)
+    dewLocRecognizer = PatternRecognizer(supported_entity= 'DewLocEnt', patterns=[dewLocPattern])
+    registry.add_recognizer(dewLocRecognizer)
+    #END DEWBERRY CUSTOM REGEX ADDITION
+    
     # Customize SpacyRecognizer to include some additional labels
     # First remove the default SpacyRecognizer
     registry.remove_recognizer("SpacyRecognizer")
+
+    # Creating detector for philisophical beliefs
+    genders_list = [
+       "female",
+       "male",
+       "non-binary"
+    ]
+
+    genders_recognizer = PatternRecognizer(supported_entity='GENDER', deny_list=genders_list)
+    registry.add_recognizer(genders_recognizer)
+
     # Add ORGANIZATION as an entity even though it is not recommended
     entities = [
         "DATE_TIME",
@@ -117,3 +177,8 @@ if __name__ == '__main__':
     print(show_aggie_pride())
     print('Displaying supported entities')
     pp.pprint(analyze_text('This is a test', show_supported=True))
+
+
+
+
+
