@@ -65,49 +65,22 @@ class TestSuperiorCoders(unittest.TestCase):
 
     def test_detect_race(self):
         """Test to make sure race is detected properly"""
-
-        race_pattern = Pattern(name="race_pattern",
-                               regex='[Bb]lack|[Ww]hite',
-                               score=0.01)
-
-        specific_race_pattern = Pattern(name="specific_race_pattern",
-                                        regex='[Aa]frican [Aa]merican|[Cc]aucasion|[Nn]ative [Aa]merican|[Hh]ispanic|[Aa]sian|[Ii]ndian',
-                                        score=0.40)
-
-        race_context = ['race']
-        # Define the recognizer with one or more patterns
-        race_recognizer = PatternRecognizer(supported_entity="RACE",
-                                            patterns=[race_pattern],
-                                            context=race_context)
-
-        specific_race_recognizer = PatternRecognizer(supported_entity="RACE",
-                                            patterns=[specific_race_pattern],
-                                            context=race_context)
-
-        # Add the recognizer to the registry
-        registry = RecognizerRegistry()
-        registry.add_recognizer(race_recognizer)
-        registry.add_recognizer(specific_race_recognizer)
-        analyzer =  AnalyzerEngine( registry=registry, context_aware_enhancer = LemmaContextAwareEnhancer(context_similarity_factor=0.45, min_score_with_context_similarity=0.4))
-
-        #Positive Test Case
-        result = analyzer.analyze(text = 'I am African American', language = 'en')
+        # Positive Test Case
+        result = analyze_text('I am African American')
         print(result)
-        self.assertIn('NRP', [] ,result)
+        self.assertIn('RACE', str(result))
 
-        #Positive Test Case
-        result = analyzer.analyze(text = 'I am Native American', language = 'en')
+        # Positive Test Case
+        result = analyze_text('I am Native American')
         print(result)
-        self.assertIn('NRP', [], result)
+        self.assertIn('RACE', str(result))
 
-        #Negative Test Case
-        result = analyzer.analyze(text = 'I am brown', language = 'en')
+        # Positive Test Case
+        result = analyze_text('I am Black')
         print(result)
-        self.assertNotIn('NRP', [], result)
+        self.assertIn('RACE', str(result))
 
-
-    test_detect_race(unittest.TestCase)
-
-
-
-
+        # Negative Test Case
+        result = analyze_text('I am brown')
+        print(result)
+        self.assertNotIn('RACE', str(result))
