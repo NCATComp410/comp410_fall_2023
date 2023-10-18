@@ -58,19 +58,23 @@ class TestTeamTechniGALS(unittest.TestCase):
 
     def test_zipcode(self):
         """Test to find zipcode of user"""
-        #positive testcase
+        #positive testcases
         results = analyze_text('my zipcode is: 27401')
         print(results)
         self.assertIn('ZIPCODE', str(results))
 
-        #positive testcase
-        results = analyze_text('30135')
+        
+        results = analyze_text('my zipcode is: 30135-0000')
         print(results)
         self.assertIn('ZIPCODE', str(results))
 
 
-        #negative testcase
-        results = analyze_text('274001')
+        #negative testcases
+        results = analyze_text('my zipcode is: 1234567890')
+        print(results)
+        self.assertNotIn('ZIPCODE', str(results))
+
+        results = analyze_text('my zipcode is: 1234')
         print(results)
         self.assertNotIn('ZIPCODE', str(results))
 
