@@ -24,6 +24,38 @@ class TestTeamTechniGALS(unittest.TestCase):
         print(results)
         self.assertNotIn('GENDER', str(results))
 
+    def test_bank_account_number(self):
+        """Test to find bank account number"""
+        results = analyze_text('my bank account number is: 1234567890')
+        print(results)
+        self.assertIn('US_BANK_NUMBER', str(results))
+
+        results = analyze_text('my bank account number is: ABC123')
+        print(results)
+        self.assertNotIn('US_BANK_NUMBER', str(results))
+
+    def test_int_num_detect(self):
+        results = analyze_text('123-123-1234-1234')
+        print(results)
+        self.assertIn('INTERNATIONAL_PN', str(results))
+
+        results = analyze_text('123-123-1234-123')
+        print(results)
+        self.assertNotIn('INTERNATIONAL_PN', str(results))
+
+        results = analyze_text('1231231234123')
+        print(results)
+        self.assertNotIn('INTERNATIONAL_PN', str(results))
+
+    def test_detect_usernames(self):
+        # Test a valid username
+        valid_result = analyze_text('@comp410Rocks')
+        self.assertIn("USERNAME", str(valid_result), "Valid username not detected")
+
+        # Test an invalid organization
+        invalid_result = analyze_text('John Smith')
+        self.assertNotIn("USERNAME", str(invalid_result), "Invalid organization incorrectly detected")
+
     def test_zipcode(self):
         """Test to find zipcode of user"""
         #positive testcase
