@@ -11,12 +11,12 @@ class TestTeamCodeBusters(unittest.TestCase):
         #Positive test case
         results = analyze_text(" My birthdate: 11/01/2002")
         print(results)
-        self.assertIn('birthdate', str(results))
+        self.assertIn('BIRTHDATE', str(results))
 
         #Negative test case
         results = analyze_text(" My birthdate: ABC/de/frog.")
         print(results)
-        self.assertNotIn('birthdate', str(results))
+        self.assertNotIn('BIRTHDATE', str(results))
 
     def test_philisophical_belief_detect(self):
         #positive test case
