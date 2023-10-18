@@ -7,6 +7,7 @@ from presidio_analyzer import AnalyzerEngine, RecognizerRegistry, PatternRecogni
 from presidio_analyzer.predefined_recognizers import SpacyRecognizer, UsSsnRecognizer
 # Define a pretty printer for debugging
 import pprint
+
 pp = pprint.PrettyPrinter(indent=4)
 
 # make sure en_core_web_lg is loaded correctly
@@ -14,6 +15,7 @@ try:
     nlp = spacy.load("en_core_web_lg")
 except OSError:
     from spacy.cli import download
+
     download("en_core_web_lg")
     nlp = spacy.load("en_core_web_lg")
 
@@ -58,6 +60,14 @@ def create_analyzer():
     uuid_recognizer = PatternRecognizer(supported_entity='UUID',
                                         patterns=[uuid_pattern])
     registry.add_recognizer(uuid_recognizer)
+
+    # username recognizer
+    username_pattern = Pattern(name='USERNAME',
+                                 regex=r'^@[\w]{3,25}',
+                                 score=0.8)
+    username_recognizer = PatternRecognizer(supported_entity='USERNAME',
+                                              patterns=[username_pattern])
+    registry.add_recognizer(username_recognizer)
 
     # Create an additional pattern to detect a UDID
     udid_pattern = Pattern(name='udid_pattern',
@@ -141,7 +151,6 @@ def create_analyzer():
                        'conservatives']
     political_recognizer = PatternRecognizer(supported_entity="NPR", deny_list=political_terms)
     registry.add_recognizer(political_recognizer)
-    registry.add_recognizer(interest_recognizer)
 
     # Create an additional pattern to detect a 123456789 Student Id
     student_id_pattern = Pattern(name='student_id',
@@ -150,6 +159,15 @@ def create_analyzer():
     student_id_recognizer = PatternRecognizer(supported_entity='STUDENT_ID',
                                               patterns=[student_id_pattern])
     registry.add_recognizer(student_id_recognizer)
+
+    # Create a pattern to detect fourteen digit phone numbers
+    international_pn_pattern = Pattern(name='international_pn',
+                                 regex=r'^\d{3}-\d{3}-\d{4}-\d{4}',
+                                 score=0.9)
+    international_pn_recognizer = PatternRecognizer(supported_entity='INTERNATIONAL_PN',
+                                              patterns=[international_pn_pattern])
+    registry.add_recognizer(international_pn_recognizer)
+
 
     # DEWBERRY CUSTOM REGEX FOR LOCATIONS!
     dewLocPattern = Pattern(name='DewLOCATION',
@@ -193,7 +211,8 @@ def create_analyzer():
         "NRP",
         "LOCATION",
         "PERSON",
-        "ORGANIZATION"
+        "ORGANIZATION",
+        "USERNAME"
     ]
     # Add FAC to be identified as a location
     # FAC = buildings, airports, highways, bridges, etc
@@ -203,6 +222,7 @@ def create_analyzer():
         ({"DATE_TIME"}, {"DATE", "TIME"}),
         ({"NRP"}, {"NORP"}),
         ({"ORGANIZATION"}, {"ORG"}),
+        ({"USERNAME"}, {"USER"})
     ]
     # noinspection PyTypeChecker
     spacy_recognizer = SpacyRecognizer(check_label_groups=label_groups, supported_entities=entities)
