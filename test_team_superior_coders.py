@@ -7,8 +7,24 @@ class TestSuperiorCoders(unittest.TestCase):
         """Test to make sure the Aggie Pride function works"""
         self.assertEqual('Aggie Pride - Worldwide', show_aggie_pride())
 
+    def test_political_standings(self):
+        """ Test to make sure political standing is detected"""
+        #positive testcase
+        results = analyze_text("I am a republican")
+        print(results)
+        self.assertIn('NPR', str(results))
+        #negative testcase
+        results = analyze_text("I am a neutral supporter")
+        print(results)
+        self.assertNotIn('NPR', str(results))
+
     def test_student_id_detect(self):
         """Test to show if a student ID is detected"""
+
+        #positive test case
+        result = analyze_text('my student ID is: 926491673')
+        print(result)
+        self.assertIn('STUDENT_ID', str(result))
 
         #positive test case
         result = analyze_text('my student ID is: 123456789')
@@ -22,7 +38,7 @@ class TestSuperiorCoders(unittest.TestCase):
 
     def test_american_phone_number_detect(self):
         """Test to ensure an American Phone Number is detected"""
-        
+
         #positive test case
         results = analyze_text('My phone number is 1-(199)-555-9461')
         print(results)
@@ -84,3 +100,25 @@ class TestSuperiorCoders(unittest.TestCase):
         result = analyze_text('My ip address is: 123.123')
         print(result)
         self.assertNotIn('IP_ADDRESS', str(result))
+
+    def test_detect_race(self):
+        """Test to make sure race is detected properly"""
+        # Positive Test Case
+        result = analyze_text('I am African American')
+        print(result)
+        self.assertIn('RACE', str(result))
+
+        # Positive Test Case
+        result = analyze_text('I am Native American')
+        print(result)
+        self.assertIn('RACE', str(result))
+
+        # Positive Test Case
+        result = analyze_text('I am Black')
+        print(result)
+        self.assertIn('RACE', str(result))
+
+        # Negative Test Case
+        result = analyze_text('I am brown')
+        print(result)
+        self.assertNotIn('RACE', str(result))
