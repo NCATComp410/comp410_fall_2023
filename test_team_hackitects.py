@@ -7,7 +7,25 @@ class TestTeamHackitects(unittest.TestCase):
         """Test to make sure the Aggie Pride function works"""
         self.assertEqual('Aggie Pride - Worldwide', show_aggie_pride())
 
-       
+    def test_marital_status_detect(self):
+        """Testing for Marital Status"""
+        # Positive Test Cases - 1
+        self.assertEqual("3","3")
+        results = analyze_text('We are married!')
+        print(results)
+        self.assertIn('MARITALSTATS', str(results))
+
+               # # Positive Test Cases - 2
+        results = analyze_text('divorced')
+        print(results)
+        self.assertIn('MARITALSTATS', str(results))
+
+
+        # # Negative Test Case
+        results = analyze_text('M@rried!')
+        print(results)
+        self.assertNotIn('MARITALSTATS', str(results))
+        
     def test_addressDew(self):
         """Location testing"""
         #Uses both Custom Dewberry regex is DewLocEnt and built in location recognizer

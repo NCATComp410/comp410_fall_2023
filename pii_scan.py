@@ -111,6 +111,28 @@ def create_analyzer():
     registry.add_recognizer(race_recognizer)
     registry.add_recognizer(specific_race_recognizer)
 
+    # Creating a Detector for Marital Statuses:
+    marital_status_list = [
+        "single",
+        "married",
+        "divorced",
+        "separated",
+        "widowed",
+        "domestic partnership",
+        "civil union",
+        "annulled"
+    ]
+    maritalstats_recognizer = PatternRecognizer(supported_entity = "MARITALSTATS", deny_list= marital_status_list)
+    registry.add_recognizer(maritalstats_recognizer)
+
+
+    interest_pattern = Pattern(name='interestPattern',
+                           regex='(?<=((?<!(doe?s?n\'?t\s|not\s))(like\s|love\s|enjoy\s|interested\sin\s)))[^\.\,\;]+',
+                           score=0.9)
+    interest_recognizer = PatternRecognizer(supported_entity='INTEREST', patterns=[interest_pattern])
+    registry.add_recognizer(uuid_recognizer)
+    registry.add_recognizer(interest_recognizer)
+
     #Create an additional pattern to detect a 123456789 Student Id
     student_id_pattern = Pattern(name='student_id',
                                  regex=r'\b\d{9}\b',
