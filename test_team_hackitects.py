@@ -1,5 +1,5 @@
 import unittest
-from pii_scan import show_aggie_pride, analyze_text, analyze_image, image, image2, image3
+from pii_scan import show_aggie_pride, analyze_text
 
 
 class TestTeamHackitects(unittest.TestCase):
