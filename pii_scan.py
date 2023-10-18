@@ -177,3 +177,8 @@ if __name__ == '__main__':
     print(show_aggie_pride())
     print('Displaying supported entities')
     pp.pprint(analyze_text('This is a test', show_supported=True))
+
+
+
+
+
