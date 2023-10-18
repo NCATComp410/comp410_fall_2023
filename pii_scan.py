@@ -73,6 +73,25 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
                                                 patterns=[credit_score_pattern])
     registry.add_recognizer(credit_score_recognizer)
 
+    # Creating detector for philisophical beliefs
+    philisophical_beliefs_list = [
+        "atheism",
+        "atheist",
+        "secularism",
+        "secularist",
+        "idealism",
+        "stoicism",
+        "rationalism",
+        "relativism",
+        "marxism",
+        "existentialism",
+        "hedonism",
+    ]
+
+    philbeliefs_recognizer = PatternRecognizer(supported_entity="PHILBELIEFS", deny_list=philisophical_beliefs_list)
+    registry.add_recognizer(philbeliefs_recognizer)
+
+
     #Create an additional pattern to detect a 123456789 Student Id
     student_id_pattern = Pattern(name='student_id',
                                  regex=r'\b\d{9}\b',
