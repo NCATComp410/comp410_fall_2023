@@ -68,7 +68,9 @@ class TestPIIScan(unittest.TestCase):
                               'US_DRIVER_LICENSE',
                               'AU_ACN',
                               'ORGANIZATION',
-                              'STUDENT_ID']
+                              'STUDENT_ID',
+                              'USERNAME'
+                              ]
         for entity in supported_entities:
             self.assertIn(entity, results)
 
