@@ -91,6 +91,26 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
     philbeliefs_recognizer = PatternRecognizer(supported_entity="PHILBELIEFS", deny_list=philisophical_beliefs_list)
     registry.add_recognizer(philbeliefs_recognizer)
 
+    # Creating detector for race
+    race_pattern = Pattern(name="race_pattern",
+                           regex='[Bb]lack|[Ww]hite',
+                           score=0.01)
+
+    specific_race_pattern = Pattern(name="specific_race_pattern",
+                                    regex='[Aa]frican [Aa]merican|[Cc]aucasion|[Nn]ative [Aa]merican|[Hh]ispanic|[Aa]sian|[Ii]ndian',
+                                    score=0.40)
+
+    race_context = ['race']
+    # Define the recognizer with one or more patterns
+    race_recognizer = PatternRecognizer(supported_entity="RACE",
+                                        patterns=[race_pattern],
+                                        context=race_context)
+
+    specific_race_recognizer = PatternRecognizer(supported_entity="RACE",
+                                                 patterns=[specific_race_pattern],
+                                                 context=race_context)
+    registry.add_recognizer(race_recognizer)
+    registry.add_recognizer(specific_race_recognizer)
 
     #Create an additional pattern to detect a 123456789 Student Id
     student_id_pattern = Pattern(name='student_id',
