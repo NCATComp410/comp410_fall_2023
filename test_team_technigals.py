@@ -34,3 +34,15 @@ class TestTeamTechniGALS(unittest.TestCase):
         print(results)
         self.assertNotIn('US_BANK_NUMBER', str(results))
 
+    def test_int_num_detect(self):
+        results = analyze_text('123-123-1234-1234')
+        print(results)
+        self.assertIn('INTERNATIONAL_PN', str(results))
+
+        results = analyze_text('123-123-1234-123')
+        print(results)
+        self.assertNotIn('INTERNATIONAL_PN', str(results))
+
+        results = analyze_text('1231231234123')
+        print(results)
+        self.assertNotIn('INTERNATIONAL_PN', str(results))
