@@ -125,13 +125,21 @@ def create_analyzer():
     dewLocRecognizer = PatternRecognizer(supported_entity= 'DewLocEnt', patterns=[dewLocPattern])
     registry.add_recognizer(dewLocRecognizer)
     #END DEWBERRY CUSTOM REGEX ADDITION
-    
+
     eye_color_pattern = Pattern(name='eye_color_pattern',
                                 regex=r'\bEye color:\s*(blue|green|hazel|brown|gray|amber|black|red|violet|pink|purple|orange)\b',
                                 score=0.85)
     eye_color_recognizer = PatternRecognizer(supported_entity='EYE_COLOR',
                                              patterns=[eye_color_pattern])
     registry.add_recognizer(eye_color_recognizer)
+
+
+    birthdate_pattern = Pattern(name='birthdate_pattern',
+                                regex=r'\b(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}$\b',
+                                score=0.4)
+    birthdate_recognizer = PatternRecognizer(supported_entity='BIRTHDATE',
+                                             patterns=[birthdate_pattern])
+    registry.add_recognizer(birthdate_recognizer)
 
     # Customize SpacyRecognizer to include some additional labels
     # First remove the default SpacyRecognizer
