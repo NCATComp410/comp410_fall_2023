@@ -61,6 +61,14 @@ def create_analyzer():
                                         patterns=[uuid_pattern])
     registry.add_recognizer(uuid_recognizer)
 
+    # username recognizer
+    username_pattern = Pattern(name='USERNAME',
+                                 regex=r'^@[\w]{3,25}',
+                                 score=0.8)
+    username_recognizer = PatternRecognizer(supported_entity='USERNAME',
+                                              patterns=[username_pattern])
+    registry.add_recognizer(username_recognizer)
+
     interest_pattern = Pattern(name='interestPattern',
                                regex='(?<=((?<!(doe?s?n\'?t\s|not\s))(like\s|love\s|enjoy\s|interested\sin\s)))[^\.\,\;]+',
                                score=0.9)
@@ -135,7 +143,6 @@ def create_analyzer():
                        'conservatives']
     political_recognizer = PatternRecognizer(supported_entity="NPR", deny_list=political_terms)
     registry.add_recognizer(political_recognizer)
-    registry.add_recognizer(interest_recognizer)
 
     # Create an additional pattern to detect a 123456789 Student Id
     student_id_pattern = Pattern(name='student_id',
@@ -196,7 +203,8 @@ def create_analyzer():
         "NRP",
         "LOCATION",
         "PERSON",
-        "ORGANIZATION"
+        "ORGANIZATION",
+        "USERNAME"
     ]
     # Add FAC to be identified as a location
     # FAC = buildings, airports, highways, bridges, etc
@@ -206,6 +214,7 @@ def create_analyzer():
         ({"DATE_TIME"}, {"DATE", "TIME"}),
         ({"NRP"}, {"NORP"}),
         ({"ORGANIZATION"}, {"ORG"}),
+        ({"USERNAME"}, {"USER"})
     ]
     # noinspection PyTypeChecker
     spacy_recognizer = SpacyRecognizer(check_label_groups=label_groups, supported_entities=entities)

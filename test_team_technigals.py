@@ -46,3 +46,12 @@ class TestTeamTechniGALS(unittest.TestCase):
         results = analyze_text('1231231234123')
         print(results)
         self.assertNotIn('INTERNATIONAL_PN', str(results))
+
+    def test_detect_usernames(self):
+        # Test a valid username
+        valid_result = analyze_text('@comp410Rocks')
+        self.assertIn("USERNAME", str(valid_result), "Valid username not detected")
+
+        # Test an invalid organization
+        invalid_result = analyze_text('John Smith')
+        self.assertNotIn("USERNAME", str(invalid_result), "Invalid organization incorrectly detected")
