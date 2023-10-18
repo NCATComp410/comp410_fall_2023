@@ -120,11 +120,19 @@ def create_analyzer():
     registry.add_recognizer(student_id_recognizer)
 
 
-    #DEWBERRY CUSTOM REGEX FOR LOCATIONS!
+    #DEWBERRY CUSTOM REGEX FOR LOCATIONS! 
     dewLocPattern = Pattern(name='DewLOCATION', regex=r'[0-9]+\s[A-Za-z]+\s[A-Za-z]+\s[A-Za-z]+,\s[A-Za-z]+,\s[A-Za-z][A-Za-z]\s\d\d\d\d\d', score=.9)
     dewLocRecognizer = PatternRecognizer(supported_entity= 'DewLocEnt', patterns=[dewLocPattern])
     registry.add_recognizer(dewLocRecognizer)
     #END DEWBERRY CUSTOM REGEX ADDITION
+
+    eye_color_pattern = Pattern(name='eye_color_pattern',
+                                regex=r'\bEye color:\s*(blue|green|hazel|brown|gray|amber|black|red|violet|pink|purple|orange)\b',
+                                score=0.85)
+    eye_color_recognizer = PatternRecognizer(supported_entity='EYE_COLOR',
+                                             patterns=[eye_color_pattern])
+    registry.add_recognizer(eye_color_recognizer)
+
 
     birthdate_pattern = Pattern(name='birthdate_pattern',
                                 regex=r'\b(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}$\b',
