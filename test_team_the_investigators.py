@@ -7,6 +7,18 @@ class TestTheInvestigators(unittest.TestCase):
         """Test to make sure the Aggie Pride function works"""
         self.assertEqual('Aggie Pride - Worldwide', show_aggie_pride())
 
+    def test_credit_card_detect(self):
+        """Test to see if Amex credit card is detected"""
+
+        # Positive Testcase
+        results = analyze_text('My Amex credit card number is 3400 000000 00009')
+        print(results)
+        self.assertIn('CREDIT_CARD', str(results))
+
+        # Negative Testcase
+        results = analyze_text('My Amex credit card number is 4400 000000 00009')
+        print(results)
+        self.assertNotIn('CREDIT_CARD', str(results))
 
     def test_email_address_detect(self):
         """Test to make sure email address is detected"""
@@ -35,3 +47,15 @@ class TestTheInvestigators(unittest.TestCase):
         self.assertIn('LOCATION', str(results))
         # expect POB to be detected
         self.assertNotIn('POB', str(results))
+
+    def test_full_names_detect(self):
+        """Test to make sure full names are detected"""
+        #Positive test case
+        results = analyze_text('John William Smith')
+        print(results)
+        self.assertIn('PERSON', str(results))
+
+        #Negative test case
+        results = analyze_text('John@123')
+        print(results)
+        self.assertNotIn('PERSON', str(results))
