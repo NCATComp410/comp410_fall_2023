@@ -61,6 +61,14 @@ def create_analyzer():
                                         patterns=[uuid_pattern])
     registry.add_recognizer(uuid_recognizer)
 
+    # MAC address recognizer
+    mac_pattern = Pattern(name='mac_pattern', 
+                          regex=r'\b([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})\b', 
+                          score=0.9)
+    mac_recognizer = PatternRecognizer(supported_entity='MAC_ADDRESS',
+                                        patterns=[mac_pattern])
+    registry.add_recognizer(mac_recognizer)
+
     # username recognizer
     username_pattern = Pattern(name='USERNAME',
                                  regex=r'^@[\w]{3,25}',
@@ -68,6 +76,14 @@ def create_analyzer():
     username_recognizer = PatternRecognizer(supported_entity='USERNAME',
                                               patterns=[username_pattern])
     registry.add_recognizer(username_recognizer)
+
+    # Create an additional pattern to detect a UDID
+    udid_pattern = Pattern(name='udid_pattern',
+                           regex=r'\b[a-fA-F0-9]{8}-[a-fA-F0-9]{16}\b',
+                           score=0.9)
+    udid_recognizer = PatternRecognizer(supported_entity='UDID',
+                                        patterns=[udid_pattern])
+    registry.add_recognizer(udid_recognizer)
 
     interest_pattern = Pattern(name='interestPattern',
                                regex='(?<=((?<!(doe?s?n\'?t\s|not\s))(like\s|love\s|enjoy\s|interested\sin\s)))[^\.\,\;]+',
