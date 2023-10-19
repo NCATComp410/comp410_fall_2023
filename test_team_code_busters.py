@@ -58,6 +58,19 @@ class TestTeamCodeBusters(unittest.TestCase):
         print(results)
         self.assertNotIn('EYE_COLOR', str(results))
 
+    def test_udid(self):
+        '''Testing if UDID is detected'''
+
+        # positive test case
+        results = analyze_text('A7C9B2A4-F6E82B43C580E24F')
+        print(results)
+        self.assertIn('UDID', str(results))
+
+        # negative test case
+        results = analyze_text('K7Y9J2A4-R6T8X1')
+        print(results)
+        self.assertNotIn('UDID', str(results))
+
     def test_health_insurance_policy_number_detect(self):
         """Test to ensure policy number is detected"""
         #positive testcase
