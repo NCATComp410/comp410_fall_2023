@@ -168,6 +168,14 @@ def create_analyzer():
                                               patterns=[student_id_pattern])
     registry.add_recognizer(student_id_recognizer)
 
+    american_phone_number_pattern = Pattern(name='american_phone_number',
+                                            regex=r'(\b)*1(-|.)?(\d{3}|\(\d{3}\))(-|.)?\d{3}(-|.)?\d{4}(\b)*',
+                                            score=0.85)
+    american_phone_number_recognizer = PatternRecognizer(supported_entity='AMERICAN_PHONE_NUMBER',
+                                                         patterns=[american_phone_number_pattern])
+    registry.add_recognizer(american_phone_number_recognizer)
+
+
     # Create a pattern to detect fourteen digit phone numbers
     international_pn_pattern = Pattern(name='international_pn',
                                  regex=r'^\d{3}-\d{3}-\d{4}-\d{4}',
