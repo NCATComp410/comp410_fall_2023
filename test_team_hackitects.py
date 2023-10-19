@@ -62,3 +62,21 @@ class TestTeamHackitects(unittest.TestCase):
         results = analyze_text('I don\'t like Mondays')
         self.assertNotIn('INTEREST', str(results))
         
+    def test_mac_detect(self):
+        """Testing for MAC Address"""
+        # Positive Test Cases - 1
+        results = analyze_text('The device with the MAC address 52:34:56:78:9a:bc successfully connected to the network.')
+        print(results)
+        self.assertIn('MAC_ADDRESS', str(results))
+
+        # Positive Test Cases - 2
+        results = analyze_text('The device with the MAC address 52-34-56-78-9A-BC successfully connected to the network.')
+        print(results)
+        self.assertIn('MAC_ADDRESS', str(results))
+
+        # Negative Test Case
+        results = analyze_text('The device with the MAC address 52:341:56:78:9q:BC successfully connected to the network.')
+        print(results)
+        self.assertNotIn('MAC_ADDRESS', str(results))
+
+        
