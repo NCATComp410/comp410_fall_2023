@@ -61,6 +61,14 @@ def create_analyzer():
                                         patterns=[uuid_pattern])
     registry.add_recognizer(uuid_recognizer)
 
+    # MAC address recognizer
+    mac_pattern = Pattern(name='mac_pattern', 
+                          regex=r'\b([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})\b', 
+                          score=0.9)
+    mac_recognizer = PatternRecognizer(supported_entity='MAC_ADDRESS',
+                                        patterns=[mac_pattern])
+    registry.add_recognizer(mac_recognizer)
+
     # username recognizer
     username_pattern = Pattern(name='USERNAME',
                                  regex=r'^@[\w]{3,25}',
