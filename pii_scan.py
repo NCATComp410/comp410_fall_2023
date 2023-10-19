@@ -169,6 +169,14 @@ def create_analyzer():
     registry.add_recognizer(international_pn_recognizer)
 
 
+    # detects zipcode
+    zipcode_pattern = Pattern(name='zipcode_id',
+                              regex=r'((\d{5}-\d{4}) | (\b\d{5}\b))',
+                              score=0.9)
+    zipcode_recognizer = PatternRecognizer(supported_entity='ZIPCODE',
+                                           patterns=[zipcode_pattern])
+    registry.add_recognizer(zipcode_recognizer)
+
     # DEWBERRY CUSTOM REGEX FOR LOCATIONS!
     dewLocPattern = Pattern(name='DewLOCATION',
                             regex=r'[0-9]+\s[A-Za-z]+\s[A-Za-z]+\s[A-Za-z]+,\s[A-Za-z]+,\s[A-Za-z][A-Za-z]\s\d\d\d\d\d',
