@@ -4,12 +4,12 @@
 "republicans"
 # US passport
 passport 123456789
-# 4 race terms
+# Detect RACE
 Black
 White
 Hispanic
 Asian
-# 6 Valid phone numbers per requirements
+# 6 Valid PHONE_NUMBER per requirements
 phone 1-919-555-1212
 phone 919-555-1212,
 phone 9195551212

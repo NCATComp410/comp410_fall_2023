@@ -1,6 +1,6 @@
 # AU Medicare number
 Medicare: 2123 45670 1
-# Test SSN
+# Test US_SSN
 Social: 123-45-6789
 # Test crypto
 Crypto: 16Yeky6GMjeNkAiNcBY7ZhrLoMSgg1BoyZ

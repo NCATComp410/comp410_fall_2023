@@ -7,6 +7,7 @@ from presidio_analyzer import AnalyzerEngine, RecognizerRegistry, PatternRecogni
 from presidio_analyzer.predefined_recognizers import SpacyRecognizer, UsSsnRecognizer
 import os
 import sys
+import re
 # Define a pretty printer for debugging
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
@@ -92,7 +93,7 @@ def create_analyzer():
     credit_score_pattern = Pattern(name='credit_score_pattern',
                                    regex=r'\b(3[0-9]{2}|[4-7][0-9]{2}|850)\b',
                                    score=0.9)
-    credit_score_recognizer = PatternRecognizer(supported_entity='CREDIT_CARD',
+    credit_score_recognizer = PatternRecognizer(supported_entity='CREDIT_SCORE',
                                                 patterns=[credit_score_pattern])
     registry.add_recognizer(credit_score_recognizer)
 
@@ -116,7 +117,7 @@ def create_analyzer():
     # Creating detector for race
     race_pattern = Pattern(name="race_pattern",
                            regex='[Bb]lack|[Ww]hite',
-                           score=0.01)
+                           score=0.15)
     specific_race_pattern = Pattern(name="specific_race_pattern",
                                     regex='[Aa]frican [Aa]merican|[Cc]aucasion|[Nn]ative [Aa]merican|[Hh]ispanic|['
                                           'Aa]sian|[Ii]ndian',
@@ -281,7 +282,7 @@ def scan_files(start_path):
                           'IP_ADDRESS', 'AU_MEDICARE', 'US_PASSPORT', 'UUID', 'INTERNATIONAL_PN', 'PERSON', 'BIRTHDATE',
                           'POB', 'NPR', 'US_BANK_NUMBER', 'EYE_COLOR', 'UDID', 'INTEREST', 'GENDER',
                           'CRYPTO', 'MARITALSTATS', 'LOCATION', 'US_SSN', 'US_ITIN', 'MAC_ADDRESS', 'STUDENT_ID',
-                          'RACE', 'USERNAME']
+                          'RACE', 'USERNAME', 'CREDIT_SCORE', 'PHONE_NUMBER']
 
     # check to make sure start_path is a directory
     if not os.path.isdir(start_path):
@@ -298,19 +299,40 @@ def scan_files(start_path):
                 print(os.path.join(root, file))
                 # Open the file
                 with open(os.path.join(root, file), 'r') as f:
+                    expected_entity = ''
                     # read each line
                     for line in f.readlines():
                         # If a line begins with a # then print it but don't analyze it
                         if line.startswith('#'):
                             print(line.strip())
+                            # Try to find an expected_entity in the line
+                            m = re.search(r'([A-Z_]{3,})', line)
+                            if m:
+                                expected_entity = m.group(1)
+                            else:
+                                expected_entity = ''
                         else:
                             # analyze each line
+                            detected = False
                             for result in analyze_text(line, score_threshold=0.1):
                                 if result.entity_type in supported_pii_list:
+                                    if expected_entity:
+                                        if result.entity_type == expected_entity:
+                                            detected = True
+                                    else:
+                                        detected = True
                                     print('  ---')
                                     print('  '+line.strip())
                                     print('  ', end='')
                                     print(result)
+                                    # if this is a no_ file then print a warning
+                                    if file.startswith('no_') and detected:
+                                        print('  ** FALSE DETECTION **')
+                                        detected = False
+                            # if there were no results detected and this is a has_ file then print it
+                            if file.startswith('has_') and not detected:
+                                print('  ---')
+                                print('  **NOT DETECTED** '+line.strip())
 
 
 if __name__ == '__main__':

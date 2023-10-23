@@ -1,10 +1,10 @@
-# Invalid BCBS
+# Invalid health insurance number
 BCBS: XYZ1289
-# Invalid date
+# Invalid date of birth
 DOB: 13/70
-# Invalid religion
+# Invalid belief
 Belief: religion
-# Invalid street address
+# Invalid credit score (a street address with something that looks like a credit score)
 Street Address: 790 5th Street
 # Invalid eye color
 Eye Color: large

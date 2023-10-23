@@ -2,7 +2,7 @@
 CC: 6221 9888 1234 0000
 # Invalid email
 email: jgfj4!3 @ gmail.com
-# Invalid POB
-Jonesville
+# Invalid place of birth
+goodbar
 # Invalid Name
 green eggs and ham

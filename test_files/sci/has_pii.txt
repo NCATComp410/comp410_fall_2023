@@ -1,6 +1,8 @@
-# US_ITIN
+# Detect US_ITIN
 taxid 900701234
-# 3 Credit cards https://developer.squareup.com/docs/devtools/sandbox/payments
+# Detect Credit cards https://developer.squareup.com/docs/devtools/sandbox/payments
 3569 9900 1009 5841
+# Detect credit card
 3000 000000 0004
+# Detect credit card
 6011 0000 0000 0004

@@ -7,6 +7,6 @@ blonde
 # Invalid phone
 51-1212
 # Invalid IP
-123.456.78.90
+000.456.78.90
 # Invalid student
 number 93939393

@@ -1,19 +1,18 @@
-# zip codes
+# Detect ZIPCODE
 27709-3737
 23482
-# userid
+# Detect USERNAME
 instagram @12_AaBbCcDdEeFfG
-# international phone number
+# Detect INTERNATIONAL_PN
 phone 44-(0)32-123-4567
 phone 44-(0)68-1234-5678
-# VIN
+# Detect VIN_NUMBER
 012O345I678Q9ABCD
-# Bank account
+# Detect US_BANK_NUMBER
 bank account 012345678
 bank account 112345678
 bank account 212345678
-# 3 Gender terms
+# Detect GENDER
 "female"
 "male"
 "non-binary"
-
