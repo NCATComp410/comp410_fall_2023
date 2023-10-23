@@ -1,0 +1,17 @@
+# Expect to match a single blue cross blue shield number
+BCBS: XYZ123456789
+# Expect to find 4 DOB
+DOB1: 01/01/70
+DOB2: 02/02/1970
+DOB3: 30/03/1970
+DOB4: 30/04/1970
+# Expect to find 3 beliefs
+humanism
+secularism
+atheism
+# Expect to find 1 credit score
+Credit score: 789
+# Expect to find 1 eye color
+Eye color: brown
+# expect to find a new UDID
+UDID_New: A7D9B2A4-E6E82B43C580E24F

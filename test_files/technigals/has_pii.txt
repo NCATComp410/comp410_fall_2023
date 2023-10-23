@@ -1,0 +1,19 @@
+# zip codes
+27709-3737
+23482
+# userid
+instagram @12_AaBbCcDdEeFfG
+# international phone number
+phone 44-(0)32-123-4567
+phone 44-(0)68-1234-5678
+# VIN
+012O345I678Q9ABCD
+# Bank account
+bank account 012345678
+bank account 112345678
+bank account 212345678
+# 3 Gender terms
+"female"
+"male"
+"non-binary"
+

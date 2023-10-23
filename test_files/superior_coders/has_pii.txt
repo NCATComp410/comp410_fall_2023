@@ -1,0 +1,22 @@
+# 3 polical from issue description
+"liberals"
+"democrats"
+"republicans"
+# US passport
+passport 123456789
+# 4 race terms
+Black
+White
+Hispanic
+Asian
+# 6 Valid phone numbers per requirements
+phone 1-919-555-1212
+phone 919-555-1212,
+phone 9195551212
+phone 1-(919)-555-1212
+phone (919)-555-1212
+phone 919.555.1212
+# Valid IP
+192.168.1.1
+# Student ID
+student 950400000

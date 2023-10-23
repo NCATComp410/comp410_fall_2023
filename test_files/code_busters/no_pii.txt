@@ -1,0 +1,12 @@
+# Invalid BCBS
+BCBS: XYZ1289
+# Invalid date
+DOB: 13/70
+# Invalid religion
+Belief: religion
+# Invalid street address
+Street Address: 790 5th Street
+# Invalid eye color
+Eye Color: large
+# Invalid UDID - G is not valid
+UDID_New: A7D9B2A4-G6E82B43C580E24F

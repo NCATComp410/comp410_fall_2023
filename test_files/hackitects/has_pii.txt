@@ -1,0 +1,21 @@
+# find 8 marital status
+"single",
+"married",
+"divorced",
+"separated",
+"widowed",
+"domestic partnership",
+"civil union",
+"annulled"
+# Find 5 interests
+I enjoy dancing
+I love playing baseball
+I like reading
+I like Chis-Chan
+I am interested in Bibleman
+# Find 1 MAC
+MAC: 00:0a:95:9d:68:16
+# Find 1 NCDL
+NCDL: 123456789012
+# Find 1 address
+Address: 1601 East Market Street, Greensboro, NC 27411

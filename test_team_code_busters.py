@@ -8,28 +8,28 @@ class TestTeamCodeBusters(unittest.TestCase):
         self.assertEqual('Aggie Pride - Worldwide', show_aggie_pride())
 
     def test_birthdate_detect(self):
-        #Positive test case
+        # Positive test case
         results = analyze_text(" My birthdate: 11/01/2002")
         print(results)
         self.assertIn('BIRTHDATE', str(results))
 
-        #Negative test case
+        # Negative test case
         results = analyze_text(" My birthdate: ABC/de/frog.")
         print(results)
         self.assertNotIn('BIRTHDATE', str(results))
 
     def test_philisophical_belief_detect(self):
-        #positive test case
+        # positive test case
         results = analyze_text("marxism")
         print(results)
         self.assertIn('PHILBELIEFS', str(results))
 
-        #negative test case
+        # negative test case
         results = analyze_text("christian")
         print(results)
         self.assertNotIn('PHILBELIEFS', str(results))
 
-    def  test_credit_card_score_detect(self):
+    def test_credit_card_score_detect(self):
         """Test to make sure credit score is detected"""
         # positive testcase
         results = analyze_text('my current credit score is: 450')
@@ -48,18 +48,18 @@ class TestTeamCodeBusters(unittest.TestCase):
 
     def test_eye_color_detect(self):
         """Testing if eye color is detected"""
-        #positive test case
+        # positive test case
         results = analyze_text('Eye color: red')
         print(results)
         self.assertIn('EYE_COLOR', str(results))
 
-        #negative test case
+        # negative test case
         results = analyze_text('Eye color: Ball')
         print(results)
         self.assertNotIn('EYE_COLOR', str(results))
 
     def test_udid(self):
-        '''Testing if UDID is detected'''
+        """Testing if UDID is detected"""
 
         # positive test case
         results = analyze_text('A7C9B2A4-F6E82B43C580E24F')

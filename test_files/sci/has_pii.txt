@@ -1,0 +1,6 @@
+# US_ITIN
+taxid 900701234
+# 3 Credit cards https://developer.squareup.com/docs/devtools/sandbox/payments
+3569 9900 1009 5841
+3000 000000 0004
+6011 0000 0000 0004

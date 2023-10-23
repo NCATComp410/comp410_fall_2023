@@ -1,0 +1,4 @@
+Medicare: 2123 45670
+Social: 123-45-678
+Crypto: 16Yeky6GMjeNkAiNcBY7ZhrLoSgg1BoyZ
+License: B1388568

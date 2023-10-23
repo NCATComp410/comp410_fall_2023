@@ -1,0 +1,12 @@
+# Invalid political
+agnostic
+# Invalid passport
+bank 12345678
+# Invalid race
+blonde
+# Invalid phone
+51-1212
+# Invalid IP
+123.456.78.90
+# Invalid student
+number 93939393
