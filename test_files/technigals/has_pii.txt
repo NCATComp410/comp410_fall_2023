@@ -1,0 +1,18 @@
+# Detect ZIPCODE
+27709-3737
+23482
+# Detect USERNAME
+instagram @12_AaBbCcDdEeFfG
+# Detect INTERNATIONAL_PN
+phone 44-(0)32-123-4567
+phone 44-(0)68-1234-5678
+# Detect VIN_NUMBER
+012O345I678Q9ABCD
+# Detect US_BANK_NUMBER
+bank account 012345678
+bank account 112345678
+bank account 212345678
+# Detect GENDER
+"female"
+"male"
+"non-binary"

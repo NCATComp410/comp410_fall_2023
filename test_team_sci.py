@@ -1,8 +1,8 @@
 import unittest
 from pii_scan import analyze_text, show_aggie_pride
 
-class TestTeamSci(unittest.TestCase):
 
+class TestTeamSci(unittest.TestCase):
     def test_aggie_pride(self):
         """Test to make sure the Aggie Pride function works"""
         self.assertEqual('Aggie Pride - Worldwide', show_aggie_pride())
@@ -71,4 +71,3 @@ class TestTeamSci(unittest.TestCase):
         results = analyze_text('My credit card number is 1111111111111111')
         print(results)
         self.assertNotIn('CREDIT_CARD', str(results))
-

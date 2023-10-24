@@ -143,3 +143,6 @@ TestResults/
 
 # png charts
 *.png
+
+# Results files
+results.txt

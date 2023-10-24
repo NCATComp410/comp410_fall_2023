@@ -1,0 +1,10 @@
+# Invalid marital status
+Status: unknown
+# Invalid interest
+Question: I don't know which one I like
+# Invalid MAC
+MAC: MAC: 00:0a:95:9g:68:16
+# Invalid NCDL
+NCDL: 123ABC
+# Incomplete address
+Address: 1601 south east street

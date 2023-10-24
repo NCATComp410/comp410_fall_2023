@@ -1,0 +1,14 @@
+# Detect federal inmate number
+inmate 99999999
+# Detect credit card
+CC: 4111 1111 1111 1111
+# Detect credit card
+CC: 5105 1051 0510 5100
+# Detect longest valid email
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com
+# Detect standard email
+my_email@gmail.com
+# Detect place of birth
+born: Houston, TX
+# Detect a name
+John Paul Jones

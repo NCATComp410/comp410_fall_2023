@@ -32,16 +32,18 @@ class TestTheInvestigators(unittest.TestCase):
         print(results)
         self.assertNotIn('EMAIL_ADDRESS', str(results))
 
+        # test longest possible email address
+
     def test_place_of_birth_detect(self):
         """Test to make sure the place of birth is detected"""
-        #positive test
+        # positive test
         test_str = 'I was born in College Station, Texas.'
         results = analyze_text(test_str)
         self.assertIn('LOCATION', str(results))
         # expect POB to be detected
         self.assertIn('POB', str(results))
 
-        #negative test
+        # negative test
         test_str = 'I live in College Station, Texas.'
         results = analyze_text(test_str)
         self.assertIn('LOCATION', str(results))
@@ -50,12 +52,12 @@ class TestTheInvestigators(unittest.TestCase):
 
     def test_full_names_detect(self):
         """Test to make sure full names are detected"""
-        #Positive test case
+        # Positive test case
         results = analyze_text('John William Smith')
         print(results)
         self.assertIn('PERSON', str(results))
 
-        #Negative test case
+        # Negative test case
         results = analyze_text('John@123')
         print(results)
         self.assertNotIn('PERSON', str(results))
