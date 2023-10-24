@@ -34,17 +34,17 @@ class TestTeamCodeBusters(unittest.TestCase):
         # positive testcase
         results = analyze_text('my current credit score is: 450')
         print(results)
-        self.assertIn('CREDIT_CARD', str(results))
+        self.assertIn('CREDIT_SCORE', str(results))
 
         # negative testcase
         results = analyze_text('my current credit score is: 250')
         print(results)
-        self.assertNotIn('CREDIT_CARD', str(results))
+        self.assertNotIn('CREDIT_SCORE', str(results))
 
         # negative testcase
         results = analyze_text('my current credit score is: 851')
         print(results)
-        self.assertNotIn('CREDIT_CARD', str(results))
+        self.assertNotIn('CREDIT_SCORE', str(results))
 
     def test_eye_color_detect(self):
         """Testing if eye color is detected"""
