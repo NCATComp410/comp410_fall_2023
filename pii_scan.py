@@ -91,7 +91,7 @@ def create_analyzer():
     # Custom recognizer for detecting a 3-digit credit score
     # only recognizes a number between 300 and 850
     credit_score_pattern = Pattern(name='credit_score_pattern',
-                                   regex=r'\b(3[0-9]{2}|[4-7][0-9]{2}|850)\b',
+                                   regex=r'\b(?i:credit|score)\D*(3[0-9]{2}|[4-7][0-9]{2}|850)\b',
                                    score=0.9)
     credit_score_recognizer = PatternRecognizer(supported_entity='CREDIT_SCORE',
                                                 patterns=[credit_score_pattern])
