@@ -155,7 +155,7 @@ def create_analyzer():
 
     # Create an additional pattern to detect a 123456789 Student Id
     student_id_pattern = Pattern(name='student_id',
-                                 regex=r'\b\d{9}\b',
+                                 regex=r'\b(?i:student|id)\D*\d{9}\b',
                                  score=0.8)
     student_id_recognizer = PatternRecognizer(supported_entity='STUDENT_ID',
                                               patterns=[student_id_pattern])
