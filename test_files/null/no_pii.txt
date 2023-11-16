@@ -1,0 +1,4 @@
+Medicare: 212345670212345670212345670212345670
+Social: ABC123
+Crypto: 16Yeky6GMjeNkAiNcBY7ZhrLoSgg1BoyZ
+License: Don't drive

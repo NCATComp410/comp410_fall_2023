@@ -1,5 +1,5 @@
 import unittest
-from pii_scan import show_aggie_pride, analyze_text
+from pii_scan import analyze_text
 
 
 class TestTeamTechniGALS(unittest.TestCase):
@@ -55,3 +55,23 @@ class TestTeamTechniGALS(unittest.TestCase):
         # Test an invalid organization
         invalid_result = analyze_text('John Smith')
         self.assertNotIn("USERNAME", str(invalid_result), "Invalid organization incorrectly detected")
+
+    def test_zipcode(self):
+        """Test to find zipcode of user"""
+        # positive testcases
+        results = analyze_text('my zipcode is: 27401')
+        print(results)
+        self.assertIn('ZIPCODE', str(results))
+
+        results = analyze_text('my zipcode is: 30135-0000')
+        print(results)
+        self.assertIn('ZIPCODE', str(results))
+
+        # negative testcases
+        results = analyze_text('my zipcode is: 1234567890')
+        print(results)
+        self.assertNotIn('ZIPCODE', str(results))
+
+        results = analyze_text('my zipcode is: 1234')
+        print(results)
+        self.assertNotIn('ZIPCODE', str(results))
