@@ -92,3 +92,50 @@ class TestTeamHackitects(unittest.TestCase):
         # Negative Test Case because it is 13 digits
         res = analyze_text('1234567890123')
         self.assertNotIn('NCDL', str(res))
+
+#NEEDED IN requirements.txt
+# face_recognition 
+# Pillow
+
+
+#NEEDED IN pii_scan.py 
+# from PIL import Image 
+# import face_recognition
+
+# image = face_recognition.load_image_file("test.jpg")  
+# image2 = face_recognition.load_image_file("noface.jpg") 
+# image3 = face_recognition.load_image_file("otherdude.jpg")  
+
+# def analyze_image(image) 
+#   face_location = face_recognition.face_locations(images) 
+#   return face_locations 
+
+
+#NEEDED IN test_team_hackitects.py 
+#from pii_scan import show_aggie_pride, analyze_text, analyze_image, image, image2, image3
+#   
+# #Test Cases are built to handle false positives natively, if an image does not conatian a face, array containing faces doesn't populate and a value is not returned
+# 
+#   def test_image_dectection(self):
+#        """Testing if image is detected"""
+#
+#        # Positive Test Case 1
+
+#        results = analyze_image(image)
+#        print(results)
+#        self.assertTrue(results) 
+#        #image detected, so assert that the array is not empty (isEmpty? = False)
+#
+#        # Positive Test Case 2 
+#
+#        results2 = analyze_image(image3)
+#        print(results2)
+#        self.assertTrue(results2)
+#        #image detected, so assert that the array is not empty (isEmpty? = False)
+#
+#        # Negative Test Case 
+#
+#        results3 = analyze_image(image2)
+#        print(results3)
+#        self.assertFalse(results3) 
+#        #no image detected, so assert that the array is empty (isEmpty? = True)
