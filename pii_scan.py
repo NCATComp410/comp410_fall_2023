@@ -101,9 +101,10 @@ def create_analyzer():
     # only recognizes a number between 300 and 850
     credit_score_pattern = Pattern(name='credit_score_pattern',
                                    regex=r'\b(3[0-9]{2}|[4-7][0-9]{2}|850)\b',
-                                   score=0.9)
+                                   score=0.01)
     credit_score_recognizer = PatternRecognizer(supported_entity='CREDIT_SCORE',
-                                                patterns=[credit_score_pattern])
+                                                patterns=[credit_score_pattern],
+                                                context=["credit", "score"])
     registry.add_recognizer(credit_score_recognizer)
 
     # Creating detector for philosophical beliefs
@@ -202,7 +203,7 @@ def create_analyzer():
     registry.add_recognizer(eye_color_recognizer)
 
     birthdate_pattern = Pattern(name='birthdate_pattern',
-                                regex=r'\b(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}$\b',
+                                regex=r'\b(0[1-9]|[1-3][0-9])/(0[1-9]|[12][0-9]|3[01])/(\d{4}|\d{2})\b',
                                 score=0.4)
     birthdate_recognizer = PatternRecognizer(supported_entity='BIRTHDATE',
                                              patterns=[birthdate_pattern])
