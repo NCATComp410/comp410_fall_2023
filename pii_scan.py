@@ -63,7 +63,7 @@ def create_analyzer():
     federal_inmate_number_pattern = Pattern(name='federal_inmate_pattern',
                                             regex=r'\d{5}-0\d{2}',
                                             score=0.9)
-    federal_inmate_number_recognizer = PatternrRecognizer(supported_entity='INMATE',
+    federal_inmate_number_recognizer = PatternRecognizer(supported_entity='INMATE',
                                                           patterns=[federal_inmate_number_pattern])
     registry.add_recognizer(federal_inmate_number_recognizer)
     
