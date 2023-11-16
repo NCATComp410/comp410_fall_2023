@@ -110,6 +110,7 @@ def create_analyzer():
         "marxism",
         "existentialism",
         "hedonism",
+        "humanism"
     ]
     philbeliefs_recognizer = PatternRecognizer(supported_entity="PHILBELIEFS", deny_list=philosophical_beliefs_list)
     registry.add_recognizer(philbeliefs_recognizer)
