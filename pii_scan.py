@@ -193,7 +193,7 @@ def create_analyzer():
     registry.add_recognizer(eye_color_recognizer)
 
     birthdate_pattern = Pattern(name='birthdate_pattern',
-                                regex=r'\b(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}$\b',
+                                regex=r'\b(0[1-9]|[1-3][0-9])/(0[1-9]|[12][0-9]|3[01])/(\d{4}|\d{2})\b',
                                 score=0.4)
     birthdate_recognizer = PatternRecognizer(supported_entity='BIRTHDATE',
                                              patterns=[birthdate_pattern])
