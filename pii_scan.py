@@ -49,6 +49,15 @@ def create_analyzer():
     place_of_birth_terms = ['place of birth', 'birthplace', 'born']
     pob_recognizer = PatternRecognizer(supported_entity="POB", deny_list=place_of_birth_terms)
     registry.add_recognizer(pob_recognizer)
+    
+    #Email addresses recognizer
+    email_pattern = Pattern(name='email_pattern',
+                            regex=r'\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b',
+                            score=0.9)
+    email_recognizer = PatternRecognizer(supported_entity='EMAIL_ADDRESS',
+                                         patterns=[email_pattern])
+    registry.add_recognizer(email_recognizer)
+
 
     # Create an additional pattern to detect a 8-4-4-4-12 UUID
     uuid_pattern = Pattern(name='uuid_pattern',
