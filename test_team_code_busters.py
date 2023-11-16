@@ -32,17 +32,17 @@ class TestTeamCodeBusters(unittest.TestCase):
     def test_credit_card_score_detect(self):
         """Test to make sure credit score is detected"""
         # positive testcase
-        results = analyze_text('my current credit score is: 450')
+        results = analyze_text('Credit score: 450')
         print(results)
         self.assertIn('CREDIT_SCORE', str(results))
 
         # negative testcase
-        results = analyze_text('my current credit score is: 250')
+        results = analyze_text('Credit score: 250')
         print(results)
         self.assertNotIn('CREDIT_SCORE', str(results))
 
         # negative testcase
-        results = analyze_text('my current credit score is: 851')
+        results = analyze_text('Credit score: 851')
         print(results)
         self.assertNotIn('CREDIT_SCORE', str(results))
 
