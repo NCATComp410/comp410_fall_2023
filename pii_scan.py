@@ -100,6 +100,15 @@ def create_analyzer():
                                                 patterns=[credit_score_pattern])
     registry.add_recognizer(credit_score_recognizer)
 
+    #Custom Recognizer for detecting 12-character insurance policy number
+    insurance_policy_pattern = Pattern(name='insurance_policy_pattern',
+                                       regex=r'^[A-Z]{3}\d{9}$',
+                                       score=0.9)
+    insurance_policy_recognizer= PatternRecognizer(supported_entity='INSURANCE_POLICY',
+                                                   patterns=[insurance_policy_pattern]
+                                                   context=["insurance","policy"])
+    registry.add_recognizer(insurance_policy_recognizer)
+
     # Creating detector for philisophical beliefs
     philisophical_beliefs_list = [
         "atheism",
