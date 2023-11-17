@@ -71,7 +71,8 @@ class TestPIIScan(unittest.TestCase):
                               'AU_ACN',
                               'ORGANIZATION',
                               'STUDENT_ID',
-                              'USERNAME'
+                              'USERNAME',
+                              'INMATE'
                               ]
         for entity in supported_entities:
             self.assertIn(entity, results)
