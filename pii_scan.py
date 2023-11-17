@@ -59,6 +59,15 @@ def create_analyzer():
     registry.add_recognizer(email_recognizer)
 
 
+    # custom federal inmate number
+    federal_inmate_number_pattern = Pattern(name='federal_inmate_pattern',
+                                            regex=r'\d{5}-0\d{2}',
+                                            score=0.9)
+    federal_inmate_number_recognizer = PatternRecognizer(supported_entity='INMATE',
+                                                          patterns=[federal_inmate_number_pattern])
+    registry.add_recognizer(federal_inmate_number_recognizer)
+    
+
     # Create an additional pattern to detect a 8-4-4-4-12 UUID
     uuid_pattern = Pattern(name='uuid_pattern',
                            regex=r'\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\b',
