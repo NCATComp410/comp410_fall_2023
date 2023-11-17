@@ -1,5 +1,5 @@
-# Detect federal inmate number
-inmate 99999999
+# Detect federal inmate number INMATE
+inmate 12345-012
 # Detect credit card
 CC: 4111 1111 1111 1111
 # Detect credit card

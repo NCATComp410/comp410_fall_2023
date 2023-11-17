@@ -73,3 +73,8 @@ class TestTheInvestigators(unittest.TestCase):
         results = analyze_text('My name is Harold Martin and my number is 28215-290') 
         print(results)
         self.assertNotIn('INMATE', str(results))
+
+        # Negative test case for number of digits
+        results = analyze_text('My name is Harold Martin and my number is 282156-090')
+        print(results)
+        self.assertNotIn('INMATE', str(results))

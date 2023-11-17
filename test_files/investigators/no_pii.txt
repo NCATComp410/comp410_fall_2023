@@ -1,3 +1,5 @@
+# Invalid INMATE
+123456-012
 # Invalid CC
 CC: 6221 9888 1234 0000
 # Invalid email
