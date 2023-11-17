@@ -76,14 +76,14 @@ class TestTeamCodeBusters(unittest.TestCase):
         #positive testcase
         results = analyze_text('My insurance policy number is XYZ123456789')
         print(results)
-        self.assertIn('US_DRIVER_LICENSE', str(results))
+        self.assertIn('INSURANCE_POLICY', str(results))
 
         #negative testcase
         results = analyze_text('My insurance policy number is ABC123456789011')
         print(results)
-        self.assertNotIn('US_DRIVER_LICENSE', str(results))
+        self.assertNotIn('INSURANCE_POLICY', str(results))
 
         #negative testcase
         results = analyze_text('My insurance policy number is ABCDE12345678')
         print(results)
-        self.assertNotIn('US_DRIVER_LICENSE', str(results))
+        self.assertNotIn('INSURANCE_POLICY', str(results))
