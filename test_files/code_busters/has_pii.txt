@@ -1,0 +1,22 @@
+# Detect a health insurance number
+BCBS: XYZ123456789
+# Detect a date of birth
+DOB1: 01/01/70
+# Detect a date of birth
+DOB2: 02/02/1970
+# Detect a date of birth
+DOB3: 30/03/1970
+# Detect a date of birth
+DOB4: 30/04/1970
+# Detect a belief
+humanism
+# Detect a belief
+secularism
+# Detect a belief
+atheism
+# Detect a credit score
+Credit score: 789
+# Detect eye color
+Eye color: brown
+# Detect a UDID
+UDID new format: A7D9B2A4-E6E82B43C580E24F

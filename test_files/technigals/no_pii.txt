@@ -1,0 +1,10 @@
+# invalid zip
+9021-1234
+# invalid userid - issue indicated 16 chars max
+instagram @12AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz
+# invalid VIN_NUMBER
+phone 12345678901234567890
+# invalid US_BANK_NUMBER - issue stated they begin with 0,1,2 and are 9 digits long
+bank account 3123456789
+# invalid gender
+My gender is neutral

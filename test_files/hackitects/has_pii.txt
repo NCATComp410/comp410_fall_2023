@@ -1,0 +1,33 @@
+# Detect marital status
+"single",
+# Detect marital status
+"married",
+# Detect marital status
+"divorced",
+# Detect marital status
+"separated",
+# Detect marital status
+"widowed",
+# Detect marital status
+"domestic partnership",
+# Detect marital status
+"civil union",
+# Detect marital status
+"annulled"
+# Detect interests
+I enjoy dancing
+# Detect interests
+I love playing baseball
+# Detect interests
+I like reading
+# Detect interests
+I like Chis-Chan
+# Detect interests
+I am interested in Bibleman
+# Detect interests
+# Detect MAC_ADDRESS
+MAC: 00:0a:95:9d:68:16
+# Detect NCDL
+NCDL: 123456789012
+# Detect address
+Address: 1601 East Market Street, Greensboro, NC 27411
