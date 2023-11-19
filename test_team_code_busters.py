@@ -70,3 +70,20 @@ class TestTeamCodeBusters(unittest.TestCase):
         results = analyze_text('K7Y9J2A4-R6T8X1')
         print(results)
         self.assertNotIn('UDID', str(results))
+
+    def test_health_insurance_policy_number_detect(self):
+        """Test to ensure policy number is detected"""
+        #positive testcase
+        results = analyze_text('My insurance policy number is XYZ123456789')
+        print(results)
+        self.assertIn('INSURANCE_POLICY', str(results))
+
+        #negative testcase
+        results = analyze_text('My insurance policy number is ABC123456789011')
+        print(results)
+        self.assertNotIn('INSURANCE_POLICY', str(results))
+
+        #negative testcase
+        results = analyze_text('My insurance policy number is ABCDE12345678')
+        print(results)
+        self.assertNotIn('INSURANCE_POLICY', str(results))

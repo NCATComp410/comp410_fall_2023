@@ -116,6 +116,15 @@ def create_analyzer():
                                                 context=["credit", "score"])
     registry.add_recognizer(credit_score_recognizer)
 
+    #Custom Recognizer for detecting 12-character insurance policy number
+    insurance_policy_pattern = Pattern(name='insurance_policy_pattern',
+                                       regex=r'\b[A-Z]{3}\d{9}\b',
+                                       score=0.9)
+    insurance_policy_recognizer= PatternRecognizer(supported_entity='INSURANCE_POLICY',
+                                                   patterns=[insurance_policy_pattern],
+                                                   context=["insurance","policy"])
+    registry.add_recognizer(insurance_policy_recognizer)
+
     # Creating detector for philosophical beliefs
     philosophical_beliefs_list = [
         "atheism",
@@ -306,7 +315,7 @@ def scan_files(start_path):
                           'IP_ADDRESS', 'AU_MEDICARE', 'US_PASSPORT', 'UUID', 'INTERNATIONAL_PN', 'PERSON', 'BIRTHDATE',
                           'POB', 'NPR', 'US_BANK_NUMBER', 'EYE_COLOR', 'UDID', 'INTEREST', 'GENDER',
                           'CRYPTO', 'MARITALSTATS', 'LOCATION', 'US_SSN', 'US_ITIN', 'MAC_ADDRESS', 'STUDENT_ID',
-                          'RACE', 'USERNAME', 'CREDIT_SCORE', 'PHONE_NUMBER', 'NCDL']
+                          'RACE', 'USERNAME', 'CREDIT_SCORE', 'PHONE_NUMBER', 'NCDL', 'INSURANCE_POLICY']
 
     # check to make sure start_path is a directory
     if not os.path.isdir(start_path):

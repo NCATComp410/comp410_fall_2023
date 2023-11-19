@@ -1,4 +1,4 @@
-# Invalid health insurance number
+# Invalid health insurance number INSURANCE_POLICY
 BCBS: XYZ1289
 # Invalid date of birth
 DOB: 13/70
