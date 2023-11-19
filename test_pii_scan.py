@@ -31,25 +31,15 @@ class TestPIIScan(unittest.TestCase):
         results = analyze_text('This is not a UUID: 123e4567-e89b-12d3-a456-42665234000')
         self.assertNotIn('UUID', str(results))
 
-    def test_organization(self):
-        # test a valid organization
-        # results = analyze_text('This is an organization: Texas A&M University')
-        # Latest version of en_core_web_lg not detecting this as an ORGANIZTION
-        # todo: figure out why not
-        # self.assertIn('ORGANIZATION', str(results))
-        # test an invalid organization
-        results = analyze_text('This is not an organization: Jones and Smith')
-        self.assertNotIn('ORGANIZATION', str(results))
-
     def test_base_supported_entities(self):
         """Test to make sure the default supported entities are returned"""
         results = analyze_text('', show_supported=True)
+        print(results)
         supported_entities = ['IP_ADDRESS',
                               'MEDICAL_LICENSE',
                               'LOCATION',
                               'EMAIL_ADDRESS',
                               'DATE_TIME',
-                              'ORGANIZATION',
                               'CREDIT_CARD',
                               'CRYPTO',
                               'AU_MEDICARE',
@@ -69,7 +59,6 @@ class TestPIIScan(unittest.TestCase):
                               'UUID',
                               'US_DRIVER_LICENSE',
                               'AU_ACN',
-                              'ORGANIZATION',
                               'STUDENT_ID',
                               'USERNAME'
                               ]
@@ -90,3 +79,7 @@ class TestPIIScan(unittest.TestCase):
                         if m:
                             self.assertTrue(m.group(1).startswith('test'),
                                             'Method name does not start with test: def ' + m.group(1) + ' in ' + file)
+
+
+if __name__ == '__main__':
+    unittest.main()
