@@ -27,7 +27,7 @@ I am interested in Bibleman
 # Detect interests
 # Detect MAC_ADDRESS
 MAC: 00:0a:95:9d:68:16
-# Detect driver's license
+# Detect NCDL
 NCDL: 123456789012
 # Detect address
 Address: 1601 East Market Street, Greensboro, NC 27411

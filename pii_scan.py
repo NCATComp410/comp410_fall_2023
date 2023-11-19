@@ -49,6 +49,24 @@ def create_analyzer():
     place_of_birth_terms = ['place of birth', 'birthplace', 'born']
     pob_recognizer = PatternRecognizer(supported_entity="POB", deny_list=place_of_birth_terms)
     registry.add_recognizer(pob_recognizer)
+    
+    #Email addresses recognizer
+    email_pattern = Pattern(name='email_pattern',
+                            regex=r'\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b',
+                            score=0.9)
+    email_recognizer = PatternRecognizer(supported_entity='EMAIL_ADDRESS',
+                                         patterns=[email_pattern])
+    registry.add_recognizer(email_recognizer)
+
+
+    # custom federal inmate number
+    federal_inmate_number_pattern = Pattern(name='federal_inmate_pattern',
+                                            regex=r'\d{5}-0\d{2}',
+                                            score=0.9)
+    federal_inmate_number_recognizer = PatternRecognizer(supported_entity='INMATE',
+                                                          patterns=[federal_inmate_number_pattern])
+    registry.add_recognizer(federal_inmate_number_recognizer)
+    
 
     # Create an additional pattern to detect a 8-4-4-4-12 UUID
     uuid_pattern = Pattern(name='uuid_pattern',
@@ -92,10 +110,20 @@ def create_analyzer():
     # only recognizes a number between 300 and 850
     credit_score_pattern = Pattern(name='credit_score_pattern',
                                    regex=r'\b(3[0-9]{2}|[4-7][0-9]{2}|850)\b',
-                                   score=0.9)
+                                   score=0.01)
     credit_score_recognizer = PatternRecognizer(supported_entity='CREDIT_SCORE',
-                                                patterns=[credit_score_pattern])
+                                                patterns=[credit_score_pattern],
+                                                context=["credit", "score"])
     registry.add_recognizer(credit_score_recognizer)
+
+    #Custom Recognizer for detecting 12-character insurance policy number
+    insurance_policy_pattern = Pattern(name='insurance_policy_pattern',
+                                       regex=r'\b[A-Z]{3}\d{9}\b',
+                                       score=0.9)
+    insurance_policy_recognizer= PatternRecognizer(supported_entity='INSURANCE_POLICY',
+                                                   patterns=[insurance_policy_pattern],
+                                                   context=["insurance","policy"])
+    registry.add_recognizer(insurance_policy_recognizer)
 
     # Creating detector for philosophical beliefs
     philosophical_beliefs_list = [
@@ -155,7 +183,7 @@ def create_analyzer():
 
     # Create an additional pattern to detect a 123456789 Student Id
     student_id_pattern = Pattern(name='student_id',
-                                 regex=r'\b\d{9}\b',
+                                 regex=r'\b(?i:student|id)\D*\d{9}\b',
                                  score=0.8)
     student_id_recognizer = PatternRecognizer(supported_entity='STUDENT_ID',
                                               patterns=[student_id_pattern])
@@ -193,7 +221,7 @@ def create_analyzer():
     registry.add_recognizer(eye_color_recognizer)
 
     birthdate_pattern = Pattern(name='birthdate_pattern',
-                                regex=r'\b(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}$\b',
+                                regex=r'\b(0[1-9]|[1-3][0-9])/(0[1-9]|[12][0-9]|3[01])/(\d{4}|\d{2})\b',
                                 score=0.4)
     birthdate_recognizer = PatternRecognizer(supported_entity='BIRTHDATE',
                                              patterns=[birthdate_pattern])
@@ -215,6 +243,11 @@ def create_analyzer():
     # Add custom US_SSN recognizer
     ssn_recognizer = SsnNoValidate()
     registry.add_recognizer(ssn_recognizer)
+
+    # Custom Regex for detecting 12 digit license
+    thorlicenseNum = Pattern(name='ThorPattern', regex=r'\b\d{12}\b', score=.9)
+    thorLicenseRecognizer = PatternRecognizer(supported_entity='NCDL', patterns=[thorlicenseNum])
+    registry.add_recognizer(thorLicenseRecognizer)
 
     # Set up analyzer with our updated recognizer registry
     return AnalyzerEngine(registry=registry)
@@ -253,7 +286,7 @@ def scan_files(start_path):
                           'IP_ADDRESS', 'AU_MEDICARE', 'US_PASSPORT', 'UUID', 'INTERNATIONAL_PN', 'PERSON', 'BIRTHDATE',
                           'POB', 'NPR', 'US_BANK_NUMBER', 'EYE_COLOR', 'UDID', 'INTEREST', 'GENDER',
                           'CRYPTO', 'MARITALSTATS', 'LOCATION', 'US_SSN', 'US_ITIN', 'MAC_ADDRESS', 'STUDENT_ID',
-                          'RACE', 'USERNAME', 'CREDIT_SCORE', 'PHONE_NUMBER']
+                          'RACE', 'USERNAME', 'CREDIT_SCORE', 'PHONE_NUMBER', 'NCDL', 'INSURANCE_POLICY']
 
     # check to make sure start_path is a directory
     if not os.path.isdir(start_path):
