@@ -61,7 +61,7 @@ def create_analyzer():
 
     # custom federal inmate number
     federal_inmate_number_pattern = Pattern(name='federal_inmate_pattern',
-                                            regex=r'\d{5}-0\d{2}',
+                                            regex=r'\b\d{5}-0\d{2}\b',
                                             score=0.9)
     federal_inmate_number_recognizer = PatternRecognizer(supported_entity='INMATE',
                                                           patterns=[federal_inmate_number_pattern])
@@ -286,7 +286,7 @@ def scan_files(start_path):
                           'IP_ADDRESS', 'AU_MEDICARE', 'US_PASSPORT', 'UUID', 'INTERNATIONAL_PN', 'PERSON', 'BIRTHDATE',
                           'POB', 'NPR', 'US_BANK_NUMBER', 'EYE_COLOR', 'UDID', 'INTEREST', 'GENDER',
                           'CRYPTO', 'MARITALSTATS', 'LOCATION', 'US_SSN', 'US_ITIN', 'MAC_ADDRESS', 'STUDENT_ID',
-                          'RACE', 'USERNAME', 'CREDIT_SCORE', 'PHONE_NUMBER', 'NCDL', 'INSURANCE_POLICY']
+                          'RACE', 'USERNAME', 'CREDIT_SCORE', 'PHONE_NUMBER', 'NCDL', 'INSURANCE_POLICY', 'INMATE']
 
     # check to make sure start_path is a directory
     if not os.path.isdir(start_path):
