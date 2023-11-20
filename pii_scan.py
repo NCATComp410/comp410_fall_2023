@@ -116,6 +116,15 @@ def create_analyzer():
                                                 context=["credit", "score"])
     registry.add_recognizer(credit_score_recognizer)
 
+    #Custom Recognizer for detecting 12-character insurance policy number
+    insurance_policy_pattern = Pattern(name='insurance_policy_pattern',
+                                       regex=r'\b[A-Z]{3}\d{9}\b',
+                                       score=0.9)
+    insurance_policy_recognizer= PatternRecognizer(supported_entity='INSURANCE_POLICY',
+                                                   patterns=[insurance_policy_pattern],
+                                                   context=["insurance","policy"])
+    registry.add_recognizer(insurance_policy_recognizer)
+
     # Creating detector for philosophical beliefs
     philosophical_beliefs_list = [
         "atheism",
@@ -228,33 +237,6 @@ def create_analyzer():
     genders_recognizer = PatternRecognizer(supported_entity='GENDER', deny_list=genders_list)
     registry.add_recognizer(genders_recognizer)
 
-    # Customize SpacyRecognizer to include some additional labels
-    # First remove the default SpacyRecognizer
-    registry.remove_recognizer("SpacyRecognizer")
-
-    # Add ORGANIZATION as an entity even though it is not recommended
-    entities = [
-        "DATE_TIME",
-        "NRP",
-        "LOCATION",
-        "PERSON",
-        "ORGANIZATION",
-        "USERNAME"
-    ]
-    # Add FAC to be identified as a location
-    # FAC = buildings, airports, highways, bridges, etc
-    label_groups = [
-        ({"LOCATION"}, {"GPE", "LOC", "FAC"}),
-        ({"PERSON", "PER"}, {"PERSON", "PER"}),
-        ({"DATE_TIME"}, {"DATE", "TIME"}),
-        ({"NRP"}, {"NORP"}),
-        ({"ORGANIZATION"}, {"ORG"}),
-        ({"USERNAME"}, {"USER"})
-    ]
-    # noinspection PyTypeChecker
-    spacy_recognizer = SpacyRecognizer(check_label_groups=label_groups, supported_entities=entities)
-    registry.add_recognizer(spacy_recognizer)
-
     # create a custom US_SSN recognizer
     # Remove the default US_SSN recognizer
     registry.remove_recognizer('UsSsnRecognizer')
@@ -277,9 +259,7 @@ analyzer = create_analyzer()
 
 def analyze_text(text: str, show_supported=False, show_details=False, score_threshold=0.0) -> \
         list[str] | list[RecognizerResult]:
-    # Add ORGANIZATION to the list of labels to be checked
     labels = analyzer.get_supported_entities()
-    labels.append('ORGANIZATION')
 
     # Show all entities that can be detected for debugging
     if show_supported:
@@ -306,7 +286,7 @@ def scan_files(start_path):
                           'IP_ADDRESS', 'AU_MEDICARE', 'US_PASSPORT', 'UUID', 'INTERNATIONAL_PN', 'PERSON', 'BIRTHDATE',
                           'POB', 'NPR', 'US_BANK_NUMBER', 'EYE_COLOR', 'UDID', 'INTEREST', 'GENDER',
                           'CRYPTO', 'MARITALSTATS', 'LOCATION', 'US_SSN', 'US_ITIN', 'MAC_ADDRESS', 'STUDENT_ID',
-                          'RACE', 'USERNAME', 'CREDIT_SCORE', 'PHONE_NUMBER', 'NCDL', 'INMATE']
+                          'RACE', 'USERNAME', 'CREDIT_SCORE', 'PHONE_NUMBER', 'NCDL', 'INSURANCE_POLICY', 'INMATE']
 
     # check to make sure start_path is a directory
     if not os.path.isdir(start_path):
