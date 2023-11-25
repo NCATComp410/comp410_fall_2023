@@ -1,4 +1,4 @@
-# Detect a health insurance number
+# Detect a health insurance number INSURANCE_POLICY
 BCBS: XYZ123456789
 # Detect a date of birth
 DOB1: 01/01/70
