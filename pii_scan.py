@@ -354,6 +354,7 @@ def analyze_image(image_file):
     """
     analyze_image accepts an image and returns an array of the locations of the face of each image
     if there is no image then return an empty array
+    if face_recognition is not installed then return None
     """
     #imput is of a certain image 
     #perform calc on amount of faces shown 
@@ -366,8 +367,6 @@ def analyze_image(image_file):
         return face_locations
     else:
         return None
-
-
 
 
 if __name__ == '__main__':
