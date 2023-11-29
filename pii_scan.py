@@ -4,10 +4,21 @@
 """
 import spacy
 from presidio_analyzer import AnalyzerEngine, RecognizerRegistry, PatternRecognizer, Pattern, RecognizerResult
-from presidio_analyzer.predefined_recognizers import SpacyRecognizer, UsSsnRecognizer
+from presidio_analyzer.predefined_recognizers import UsSsnRecognizer
 import os
 import sys
 import re
+import warnings
+
+# import these files only if they are installed, if not print a warning
+try:
+    from PIL import Image
+    import face_recognition
+    face_recognition_installed = True
+except ImportError:
+    face_recognition_installed = False
+    warnings.warn('Image recognition is not installed.  Use "pip install -r requirements_face_recognition.txt" to install.')
+
 # Define a pretty printer for debugging
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
@@ -337,6 +348,25 @@ def scan_files(start_path):
                             if file.startswith('has_') and not detected:
                                 print('  ---')
                                 print('  **NOT DETECTED** '+line.strip())
+
+
+def analyze_image(image_file):
+    """
+    analyze_image accepts an image and returns an array of the locations of the face of each image
+    if there is no image then return an empty array
+    if face_recognition is not installed then return None
+    """
+    #imput is of a certain image 
+    #perform calc on amount of faces shown 
+    #return # of faces 
+    if face_recognition_installed:
+        if not os.path.isfile(image_file):
+            raise FileNotFoundError
+        image = face_recognition.load_image_file(image_file)
+        face_locations = face_recognition.face_locations(image)
+        return face_locations
+    else:
+        return None
 
 
 if __name__ == '__main__':
