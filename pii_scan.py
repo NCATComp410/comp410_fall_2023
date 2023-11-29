@@ -210,7 +210,7 @@ def create_analyzer():
 
     # detects zipcode
     zipcode_pattern = Pattern(name='zipcode_id',
-                              regex=r'((\d{5}-\d{4}) | (\b\d{5}\b))',
+                              regex=r'((\d{5}-\d{4})|(\b\d{5}\b))',
                               score=0.9)
     zipcode_recognizer = PatternRecognizer(supported_entity='ZIPCODE',
                                            patterns=[zipcode_pattern])
