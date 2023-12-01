@@ -4,10 +4,21 @@
 """
 import spacy
 from presidio_analyzer import AnalyzerEngine, RecognizerRegistry, PatternRecognizer, Pattern, RecognizerResult
-from presidio_analyzer.predefined_recognizers import SpacyRecognizer, UsSsnRecognizer
+from presidio_analyzer.predefined_recognizers import UsSsnRecognizer
 import os
 import sys
 import re
+import warnings
+
+# import these files only if they are installed, if not print a warning
+try:
+    from PIL import Image
+    import face_recognition
+    face_recognition_installed = True
+except ImportError:
+    face_recognition_installed = False
+    warnings.warn('Image recognition is not installed.  Use "pip install -r requirements_face_recognition.txt" to install.')
+
 # Define a pretty printer for debugging
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
@@ -49,6 +60,24 @@ def create_analyzer():
     place_of_birth_terms = ['place of birth', 'birthplace', 'born']
     pob_recognizer = PatternRecognizer(supported_entity="POB", deny_list=place_of_birth_terms)
     registry.add_recognizer(pob_recognizer)
+    
+    #Email addresses recognizer
+    email_pattern = Pattern(name='email_pattern',
+                            regex=r'\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b',
+                            score=0.9)
+    email_recognizer = PatternRecognizer(supported_entity='EMAIL_ADDRESS',
+                                         patterns=[email_pattern])
+    registry.add_recognizer(email_recognizer)
+
+
+    # custom federal inmate number
+    federal_inmate_number_pattern = Pattern(name='federal_inmate_pattern',
+                                            regex=r'\b\d{5}-0\d{2}\b',
+                                            score=0.9)
+    federal_inmate_number_recognizer = PatternRecognizer(supported_entity='INMATE',
+                                                          patterns=[federal_inmate_number_pattern])
+    registry.add_recognizer(federal_inmate_number_recognizer)
+    
 
     # Create an additional pattern to detect a 8-4-4-4-12 UUID
     uuid_pattern = Pattern(name='uuid_pattern',
@@ -92,10 +121,20 @@ def create_analyzer():
     # only recognizes a number between 300 and 850
     credit_score_pattern = Pattern(name='credit_score_pattern',
                                    regex=r'\b(3[0-9]{2}|[4-7][0-9]{2}|850)\b',
-                                   score=0.9)
+                                   score=0.01)
     credit_score_recognizer = PatternRecognizer(supported_entity='CREDIT_SCORE',
-                                                patterns=[credit_score_pattern])
+                                                patterns=[credit_score_pattern],
+                                                context=["credit", "score"])
     registry.add_recognizer(credit_score_recognizer)
+
+    #Custom Recognizer for detecting 12-character insurance policy number
+    insurance_policy_pattern = Pattern(name='insurance_policy_pattern',
+                                       regex=r'\b[A-Z]{3}\d{9}\b',
+                                       score=0.9)
+    insurance_policy_recognizer= PatternRecognizer(supported_entity='INSURANCE_POLICY',
+                                                   patterns=[insurance_policy_pattern],
+                                                   context=["insurance","policy"])
+    registry.add_recognizer(insurance_policy_recognizer)
 
     # Creating detector for philosophical beliefs
     philosophical_beliefs_list = [
@@ -164,7 +203,7 @@ def create_analyzer():
 
     # Create a pattern to detect fourteen digit phone numbers
     international_pn_pattern = Pattern(name='international_pn',
-                                       regex=r'^\d{3}-\d{3}-\d{4}-\d{4}',
+                                       regex=r'\d{3}-\d{3}-\d{4}-\d{4}',
                                        score=0.9)
     international_pn_recognizer = PatternRecognizer(supported_entity='INTERNATIONAL_PN',
                                                     patterns=[international_pn_pattern])
@@ -172,7 +211,7 @@ def create_analyzer():
 
     # detects zipcode
     zipcode_pattern = Pattern(name='zipcode_id',
-                              regex=r'((\d{5}-\d{4}) | (\b\d{5}\b))',
+                              regex=r'((\d{5}-\d{4})|(\b\d{5}\b))',
                               score=0.9)
     zipcode_recognizer = PatternRecognizer(supported_entity='ZIPCODE',
                                            patterns=[zipcode_pattern])
@@ -194,7 +233,7 @@ def create_analyzer():
     registry.add_recognizer(eye_color_recognizer)
 
     birthdate_pattern = Pattern(name='birthdate_pattern',
-                                regex=r'\b(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}$\b',
+                                regex=r'\b(0[1-9]|[1-3][0-9])/(0[1-9]|[12][0-9]|3[01])/(\d{4}|\d{2})\b',
                                 score=0.4)
     birthdate_recognizer = PatternRecognizer(supported_entity='BIRTHDATE',
                                              patterns=[birthdate_pattern])
@@ -210,39 +249,17 @@ def create_analyzer():
     genders_recognizer = PatternRecognizer(supported_entity='GENDER', deny_list=genders_list)
     registry.add_recognizer(genders_recognizer)
 
-    # Customize SpacyRecognizer to include some additional labels
-    # First remove the default SpacyRecognizer
-    registry.remove_recognizer("SpacyRecognizer")
-
-    # Add ORGANIZATION as an entity even though it is not recommended
-    entities = [
-        "DATE_TIME",
-        "NRP",
-        "LOCATION",
-        "PERSON",
-        "ORGANIZATION",
-        "USERNAME"
-    ]
-    # Add FAC to be identified as a location
-    # FAC = buildings, airports, highways, bridges, etc
-    label_groups = [
-        ({"LOCATION"}, {"GPE", "LOC", "FAC"}),
-        ({"PERSON", "PER"}, {"PERSON", "PER"}),
-        ({"DATE_TIME"}, {"DATE", "TIME"}),
-        ({"NRP"}, {"NORP"}),
-        ({"ORGANIZATION"}, {"ORG"}),
-        ({"USERNAME"}, {"USER"})
-    ]
-    # noinspection PyTypeChecker
-    spacy_recognizer = SpacyRecognizer(check_label_groups=label_groups, supported_entities=entities)
-    registry.add_recognizer(spacy_recognizer)
-
     # create a custom US_SSN recognizer
     # Remove the default US_SSN recognizer
     registry.remove_recognizer('UsSsnRecognizer')
     # Add custom US_SSN recognizer
     ssn_recognizer = SsnNoValidate()
     registry.add_recognizer(ssn_recognizer)
+
+    # Custom Regex for detecting 12 digit license
+    thorlicenseNum = Pattern(name='ThorPattern', regex=r'\b\d{12}\b', score=.9)
+    thorLicenseRecognizer = PatternRecognizer(supported_entity='NCDL', patterns=[thorlicenseNum])
+    registry.add_recognizer(thorLicenseRecognizer)
 
     # Set up analyzer with our updated recognizer registry
     return AnalyzerEngine(registry=registry)
@@ -254,9 +271,7 @@ analyzer = create_analyzer()
 
 def analyze_text(text: str, show_supported=False, show_details=False, score_threshold=0.0) -> \
         list[str] | list[RecognizerResult]:
-    # Add ORGANIZATION to the list of labels to be checked
     labels = analyzer.get_supported_entities()
-    labels.append('ORGANIZATION')
 
     # Show all entities that can be detected for debugging
     if show_supported:
@@ -283,7 +298,7 @@ def scan_files(start_path):
                           'IP_ADDRESS', 'AU_MEDICARE', 'US_PASSPORT', 'UUID', 'INTERNATIONAL_PN', 'PERSON', 'BIRTHDATE',
                           'POB', 'NPR', 'US_BANK_NUMBER', 'EYE_COLOR', 'UDID', 'INTEREST', 'GENDER',
                           'CRYPTO', 'MARITALSTATS', 'LOCATION', 'US_SSN', 'US_ITIN', 'MAC_ADDRESS', 'STUDENT_ID',
-                          'RACE', 'USERNAME', 'CREDIT_SCORE', 'PHONE_NUMBER']
+                          'RACE', 'USERNAME', 'CREDIT_SCORE', 'PHONE_NUMBER', 'NCDL', 'INSURANCE_POLICY', 'INMATE']
 
     # check to make sure start_path is a directory
     if not os.path.isdir(start_path):
@@ -334,6 +349,25 @@ def scan_files(start_path):
                             if file.startswith('has_') and not detected:
                                 print('  ---')
                                 print('  **NOT DETECTED** '+line.strip())
+
+
+def analyze_image(image_file):
+    """
+    analyze_image accepts an image and returns an array of the locations of the face of each image
+    if there is no image then return an empty array
+    if face_recognition is not installed then return None
+    """
+    #imput is of a certain image 
+    #perform calc on amount of faces shown 
+    #return # of faces 
+    if face_recognition_installed:
+        if not os.path.isfile(image_file):
+            raise FileNotFoundError
+        image = face_recognition.load_image_file(image_file)
+        face_locations = face_recognition.face_locations(image)
+        return face_locations
+    else:
+        return None
 
 
 if __name__ == '__main__':

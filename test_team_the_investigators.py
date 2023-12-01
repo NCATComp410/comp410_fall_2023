@@ -61,3 +61,20 @@ class TestTheInvestigators(unittest.TestCase):
         results = analyze_text('John@123')
         print(results)
         self.assertNotIn('PERSON', str(results))
+
+    def test_inmate_numbers_detect(self):
+        """Test to make sure that the federal inmate numbers are detected"""
+        # Positive test case
+        results =  analyze_text('My name is Charles Manson and my federal inmate number is 12345-049')
+        print(results)
+        self.assertIn('INMATE', str(results))
+    
+        # Negative test case
+        results = analyze_text('My name is Harold Martin and my number is 28215-290') 
+        print(results)
+        self.assertNotIn('INMATE', str(results))
+
+        # Negative test case for number of digits
+        results = analyze_text('My name is Harold Martin and my number is 282156-090')
+        print(results)
+        self.assertNotIn('INMATE', str(results))
