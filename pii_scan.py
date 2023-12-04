@@ -86,6 +86,7 @@ def analyze_text(text: str, show_supported=False, show_details=False, score_thre
         "marxism",
         "existentialism",
         "hedonism",
+        "humanism"
     ]
 
     philbeliefs_recognizer = PatternRecognizer(supported_entity="PHILBELIEFS", deny_list=philisophical_beliefs_list)
