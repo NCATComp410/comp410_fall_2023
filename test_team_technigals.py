@@ -55,6 +55,13 @@ class TestTeamTechniGALS(unittest.TestCase):
         # Test an invalid organization
         invalid_result = analyze_text('John Smith')
         self.assertNotIn("USERNAME", str(invalid_result), "Invalid organization incorrectly detected")
+        
+        # Test a potential false positive
+        potential_false_positive_result = analyze_text('@legitimate_org')
+        username_occurrences = str(potential_false_positive_result).count("USERNAME")
+
+        # Check for false positives (adjust the threshold as needed)
+        self.assertEqual(username_occurrences, 1, "False positive username detection")
 
     def test_zipcode(self):
         """Test to find zipcode of user"""
